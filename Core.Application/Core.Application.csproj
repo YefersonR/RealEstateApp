@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="DTO%27s\" />
+    <Folder Include="Inferfaces\Respositories\" />
+    <Folder Include="Feactures\" />
+    <Folder Include="Enum\" />
+    <Folder Include="Mapper\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+
+</Project>
