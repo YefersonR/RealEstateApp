@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTO%27s\" />
     <Folder Include="Inferfaces\Respositories\" />
     <Folder Include="Feactures\" />
     <Folder Include="Mapper\" />
