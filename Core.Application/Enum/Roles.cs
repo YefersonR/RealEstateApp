@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Application
+namespace Core.Application.Enum
 {
-    class AppicationRegistration
+    public enum Roles
     {
+        Cliente,
+        Agente,
+        Administrador
     }
 }

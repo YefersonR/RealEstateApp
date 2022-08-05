@@ -1,8 +1,14 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Infrastructure.Email
 {
-    public class EmailRegistration
+    public static class EmailRegistration
     {
+        public static void AddSharedInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        {
+
+        }
     }
 }

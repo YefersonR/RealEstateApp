@@ -15,19 +15,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApp", "WebApp", "{5D8BDF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{73539EE8-5F68-4B9E-BDF3-5590D542B985}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp.RealState", "WebApp.RealState\WebApp.RealState.csproj", "{DB5DE1D4-216B-45D3-A2B4-C94D7DE78089}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp.RealState", "WebApp.RealState\WebApp.RealState.csproj", "{DB5DE1D4-216B-45D3-A2B4-C94D7DE78089}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.RealState", "WebApi.RealState\WebApi.RealState.csproj", "{CB5E7142-ADD1-4E68-AA9F-52F9A9D78C9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.RealState", "WebApi.RealState\WebApi.RealState.csproj", "{CB5E7142-ADD1-4E68-AA9F-52F9A9D78C9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Application", "Core.Application\Core.Application.csproj", "{5442874E-3D19-4E3B-AE13-D0F30B1EB925}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Application", "Core.Application\Core.Application.csproj", "{5442874E-3D19-4E3B-AE13-D0F30B1EB925}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Domain", "Core.Domain\Core.Domain.csproj", "{A4A7D556-F2D8-40FC-96F2-F7F6E199EA61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Domain", "Core.Domain\Core.Domain.csproj", "{A4A7D556-F2D8-40FC-96F2-F7F6E199EA61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Persistence", "Infrastructure.Persistence\Infrastructure.Persistence.csproj", "{3CC68EC4-E214-4AF9-A536-F6F6A6461AD7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Persistence", "Infrastructure.Persistence\Infrastructure.Persistence.csproj", "{3CC68EC4-E214-4AF9-A536-F6F6A6461AD7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Identity", "Infrastructure.Identity\Infrastructure.Identity.csproj", "{2E509323-CD23-41F0-BD44-C57376AF3B91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Identity", "Infrastructure.Identity\Infrastructure.Identity.csproj", "{2E509323-CD23-41F0-BD44-C57376AF3B91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Email", "Infrastructure.Email\Infrastructure.Email.csproj", "{A9B02EE6-F180-4A2E-B665-F189EC57C461}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.Shared", "Infrastructure.Email\Infrastructure.Shared.csproj", "{A9B02EE6-F180-4A2E-B665-F189EC57C461}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

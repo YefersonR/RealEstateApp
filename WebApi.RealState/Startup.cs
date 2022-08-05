@@ -1,16 +1,21 @@
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+
+using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Infrastructure.Email;
+using Infrastructure.Persistence;
+using Core.Application;
 
 namespace WebApi.RealState
 {
@@ -28,6 +33,12 @@ namespace WebApi.RealState
         {
 
             services.AddControllers();
+            services.AddIdentityInfrastructure(Configuration);
+            services.AddPersistenseInfrastructure(Configuration);
+            services.AddSharedInfrastructure(Configuration);
+            services.AddApplicationLayer(Configuration);
+
+            services.AddSession();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi.RealState", Version = "v1" });
@@ -43,11 +54,12 @@ namespace WebApi.RealState
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi.RealState v1"));
             }
-
+            app.UseSession();
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
