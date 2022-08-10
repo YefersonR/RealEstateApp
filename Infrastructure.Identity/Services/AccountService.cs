@@ -1,5 +1,7 @@
-﻿using Core.Application.DTO_s.Account;
+﻿using Core.Application.DTOS.Account;
+using Core.Application.DTOS.Email;
 using Core.Application.Enum;
+using Core.Application.Inferfaces.Service;
 using Infrastructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
@@ -11,27 +13,29 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Identity.Services
 {
-    public class AccountService
+    public class AccountService : IAccountService
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IEmailService _emailService;
 
-        public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailService emailService)
         {
             _signInManager = signInManager;
+            _emailService = emailService;
             _userManager = userManager;
         }
         public async Task<AuthenticationResponse> Authentication(AuthenticationRequest request)
         {
             var response = new AuthenticationResponse();
             var User = await _userManager.FindByNameAsync(request.UserName);
-            if(User == null)
+            if (User == null)
             {
                 response.HasError = true;
                 response.Error = $"No Account Register with {request.UserName}";
                 return response;
             }
-            var result = await _signInManager.PasswordSignInAsync(User.UserName,request.Password,false,lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(User.UserName, request.Password, false, lockoutOnFailure: false);
             if (!result.Succeeded)
             {
                 response.HasError = true;
@@ -44,18 +48,18 @@ namespace Infrastructure.Identity.Services
                 response.Error = $"Account not confirm for {request.UserName}";
                 return response;
             }
-           
+
             response.Id = User.Id;
-            response.Name= User.Name;
+            response.Name = User.Name;
             response.LastName = User.LastName;
             response.Email = User.Email;
-            response.IsVerified= User.EmailConfirmed;
+            response.IsVerified = User.EmailConfirmed;
             var roles = await _userManager.GetRolesAsync(User).ConfigureAwait(false);
             response.Roles = roles.ToList();
-            
+
             return response;
         }
-        
+
         public async Task<GenericResponse> RegisterClient(RegisterRequest request, string origin)
         {
             var response = new GenericResponse();
@@ -83,7 +87,7 @@ namespace Infrastructure.Identity.Services
 
             };
 
-            var result = await _userManager.CreateAsync(user,request.Password);
+            var result = await _userManager.CreateAsync(user, request.Password);
             if (!result.Succeeded)
             {
                 response.HasError = true;
@@ -91,34 +95,38 @@ namespace Infrastructure.Identity.Services
                 return response;
 
             }
-            await _userManager.AddToRoleAsync(user,Roles.Cliente.ToString());
-            var verificationUrl = await SendVerificationEMailUrl(user, origin); 
-            // send A email confirmation
-
+            await _userManager.AddToRoleAsync(user, Roles.Cliente.ToString());
+            var verificationUrl = await SendVerificationEMailUrl(user, origin);
+            await _emailService.Send(new EmailRequest()
+            {
+                To = user.Email,
+                Body = $"Please confirm your account visiting this URL {verificationUrl}",
+                Subject = "Confirm registration"
+            });
             return response;
         }
-        
+
         private async Task<string> SendVerificationEMailUrl(ApplicationUser user, string origin)
         {
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
             var route = "User/EmailConfirm";
-            var url = new Uri(string.Concat($"{origin}/",route));
-            var verificationUrl = QueryHelpers.AddQueryString(url.ToString(),"userId",user.Id);
+            var url = new Uri(string.Concat($"{origin}/", route));
+            var verificationUrl = QueryHelpers.AddQueryString(url.ToString(), "userId", user.Id);
             verificationUrl = QueryHelpers.AddQueryString(verificationUrl, "token", code);
 
             return verificationUrl;
         }
 
-        public  async Task<string> ConfirmEmail(string userId, string token)
+        public async Task<string> ConfirmEmail(string userId, string token)
         {
             var user = await _userManager.FindByIdAsync(userId);
-            if(user == null)
+            if (user == null)
             {
                 return $"Not account registered with this user";
             }
             token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(token));
-            var result = await _userManager.ConfirmEmailAsync(user,token);
+            var result = await _userManager.ConfirmEmailAsync(user, token);
             if (!result.Succeeded)
             {
                 return $"An error occurred while confirming {user.Email}";
@@ -126,7 +134,7 @@ namespace Infrastructure.Identity.Services
             return $"Account confirmed for {user.Email}. You can now use the App";
 
         }
-        
+
         private async Task<string> SendForgotPasswordUrl(ApplicationUser user, string origin)
         {
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
@@ -134,24 +142,29 @@ namespace Infrastructure.Identity.Services
             var route = "User/ResetPassword";
             var url = new Uri(string.Concat($"{origin}/", route));
             var verificationUrl = QueryHelpers.AddQueryString(url.ToString(), "token", code);
-            
+
 
 
             return verificationUrl;
         }
-        
-        public async Task<GenericResponse> ForgotPassword(ForgotPasswordRequest request,string origin)
+
+        public async Task<GenericResponse> ForgotPassword(ForgotPasswordRequest request, string origin)
         {
             var response = new GenericResponse();
             var user = await _userManager.FindByEmailAsync(request.Email);
-            if(user == null)
+            if (user == null)
             {
                 response.HasError = true;
                 response.Error = $"No account registered with {request.Email}";
                 return response;
             }
-            var verigicationUrl = await SendForgotPasswordUrl(user,origin);
-
+            var verificationUrl = await SendForgotPasswordUrl(user, origin);
+            await _emailService.Send(new EmailRequest()
+            {
+                To = user.Email,
+                Body = $"Please reset your account visiting this URL {verificationUrl}",
+                Subject = "Reset Password"
+            });
 
             return response;
         }
@@ -160,18 +173,18 @@ namespace Infrastructure.Identity.Services
         {
             var response = new GenericResponse();
             var user = await _userManager.FindByEmailAsync(request.Email);
-            if(user == null)
+            if (user == null)
             {
                 response.HasError = true;
                 response.Error = $"No account registered with {request.Email}";
                 return response;
             }
             request.Token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(request.Token));
-            var result = await _userManager.ResetPasswordAsync(user, request.Token,request.Password);
+            var result = await _userManager.ResetPasswordAsync(user, request.Token, request.Password);
             if (!result.Succeeded)
             {
                 response.HasError = true;
-                response.Error= $"An error occurred while reset password";
+                response.Error = $"An error occurred while reset password";
                 return response;
             }
 

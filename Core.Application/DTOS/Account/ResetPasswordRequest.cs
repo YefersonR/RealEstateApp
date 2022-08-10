@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Application.DTO_s.Account
+namespace Core.Application.DTOS.Account
 {
     public class ResetPasswordRequest
     {

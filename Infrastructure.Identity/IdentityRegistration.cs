@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
+using Core.Application.Inferfaces.Service;
+using Infrastructure.Identity.Services;
 
 namespace Infrastructure.Identity
 {
@@ -32,7 +34,11 @@ namespace Infrastructure.Identity
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
             services.AddAuthentication();
-            
+
+            #endregion
+            #region Services
+
+            services.AddTransient<IAccountService,AccountService>();
             #endregion
 
         }
