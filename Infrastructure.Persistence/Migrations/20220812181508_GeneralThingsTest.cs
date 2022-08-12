@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Persistence.Migrations
 {
-    public partial class init : Migration
+    public partial class GeneralThingsTest : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -76,7 +76,7 @@ namespace Infrastructure.Persistence.Migrations
                     EstateTypesId = table.Column<int>(type: "int", nullable: false),
                     AgentId = table.Column<int>(type: "int", nullable: false),
                     SellTypeId = table.Column<int>(type: "int", nullable: false),
-                    FeaturesId = table.Column<int>(type: "int", nullable: true),
+                    FeatureId = table.Column<int>(type: "int", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -92,8 +92,8 @@ namespace Infrastructure.Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Estates_Features_FeaturesId",
-                        column: x => x.FeaturesId,
+                        name: "FK_Estates_Features_FeatureId",
+                        column: x => x.FeatureId,
                         principalTable: "Features",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -158,9 +158,9 @@ namespace Infrastructure.Persistence.Migrations
                 column: "EstateTypesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Estates_FeaturesId",
+                name: "IX_Estates_FeatureId",
                 table: "Estates",
-                column: "FeaturesId");
+                column: "FeatureId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Estates_SellTypeId",

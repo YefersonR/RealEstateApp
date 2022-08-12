@@ -38,7 +38,19 @@ namespace Core.Application.Feactures.Estates.Queries.GetAllEstates
 
         public async Task<List<EstateRequest>> GetAllWithFilter(GetAllEstatesParameters parameters)
         {
-            var estateList = await _estatesRepository.GetAllAsync();
+            var estateList = await _estatesRepository.GetAllWhitIncludes(new List<string> { "SellTypes", "EstateTypes", "EstatesImgs" });
+            if(parameters.Toilets != null)
+            {
+                estateList = estateList.Where(x => x.Toilets == parameters.Toilets).ToList();
+            }
+            if (parameters.Price != null)
+            {
+                estateList = estateList.Where(x => x.Price == parameters.Price).ToList();
+            }
+            if (parameters.Rooms != null)
+            {
+                estateList = estateList.Where(x => x.Rooms == parameters.Rooms).ToList();
+            }
             var statesRequest = _mapper.Map<List<EstateRequest>>(estateList);
             
             return statesRequest;
