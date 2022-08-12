@@ -21,6 +21,7 @@ namespace Infrastructure.Persistence.Repositories
         {
             return await _dbContext.Set<Estate>().FindAsync(Code);
         }
+
         public async Task Update(Estate entity, string Code)
         {
             Estate entry = await _dbContext.Set<Estate>().FindAsync(Code);
