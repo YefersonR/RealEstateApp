@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 
-namespace WebApp.RealState
+namespace WebApp.RealEstate
 {
     public class Startup
     {
@@ -25,7 +25,7 @@ namespace WebApp.RealState
         {
             services.AddControllersWithViews();
             services.AddIdentityInfrastructure(Configuration);
-            services.AddPersistenseInfrastructure(Configuration);
+            services.AddPersistenceInfraestructure(Configuration);
             services.AddSharedInfrastructure(Configuration);
             services.AddApplicationLayer(Configuration);
 

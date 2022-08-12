@@ -10,6 +10,7 @@ namespace Core.Application.Enum
     {
         Cliente,
         Agente,
-        Administrador
+        Administrador,
+        Desarrollador
     }
 }

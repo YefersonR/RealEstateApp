@@ -17,7 +17,7 @@ using Infrastructure.Email;
 using Infrastructure.Persistence;
 using Core.Application;
 
-namespace WebApi.RealState
+namespace WebApi.RealEstate
 {
     public class Startup
     {
@@ -34,7 +34,7 @@ namespace WebApi.RealState
 
             services.AddControllers();
             services.AddIdentityInfrastructure(Configuration);
-            services.AddPersistenseInfrastructure(Configuration);
+            services.AddPersistenceInfraestructure(Configuration);
             services.AddSharedInfrastructure(Configuration);
             services.AddApplicationLayer(Configuration);
 

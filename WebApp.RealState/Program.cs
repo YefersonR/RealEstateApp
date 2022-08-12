@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApp.RealState
+namespace WebApp.RealEstate
 {
     public class Program
     {
