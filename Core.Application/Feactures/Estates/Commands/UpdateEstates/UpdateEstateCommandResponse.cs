@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.Estates.Commands.UpdateEstates
 {
-    public class UpdateCommandResponse
+    public class UpdateEstateCommandResponse
     {
         public string Code { get; set; }
         public double Price { get; set; }

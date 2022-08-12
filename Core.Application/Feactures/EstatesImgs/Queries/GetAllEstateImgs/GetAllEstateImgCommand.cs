@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Core.Application.Feactures.EstatesImgs.Queries.GetAllEstateImg
+namespace Core.Application.Feactures.EstatesImgs.Queries.GetAllEstateImgs
 {
     public class GetAllEstateImgCommand : IRequest<List<EstateImgRequest>>
     {

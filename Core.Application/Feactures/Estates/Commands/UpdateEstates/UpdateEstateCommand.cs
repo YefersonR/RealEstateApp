@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.Estates.Commands.UpdateEstates
 {
-    public class UpdateEstateCommand: IRequest<UpdateCommandResponse>
+    public class UpdateEstateCommand: IRequest<UpdateEstateCommandResponse>
     {
         public string Code { get; set; }
         public double Price { get; set; }
@@ -24,7 +24,7 @@ namespace Core.Application.Feactures.Estates.Commands.UpdateEstates
         public int AgentId { get; set; }
         public int SellTypeId { get; set; }
     }
-    public class UpdateEstateCommanHandler : IRequestHandler<UpdateEstateCommand, UpdateCommandResponse>
+    public class UpdateEstateCommanHandler : IRequestHandler<UpdateEstateCommand, UpdateEstateCommandResponse>
     {
         private readonly IEstatesRepository _estatesRepository;
         private readonly IMapper _mapper;
@@ -34,7 +34,7 @@ namespace Core.Application.Feactures.Estates.Commands.UpdateEstates
             _estatesRepository = estatesRepository;
             _mapper = mapper;
         }
-        public async Task<UpdateCommandResponse> Handle(UpdateEstateCommand request, CancellationToken cancellationToken)
+        public async Task<UpdateEstateCommandResponse> Handle(UpdateEstateCommand request, CancellationToken cancellationToken)
         {
             var estate = await _estatesRepository.GetByCodeAsync(request.Code);
 
@@ -44,7 +44,7 @@ namespace Core.Application.Feactures.Estates.Commands.UpdateEstates
 
             await _estatesRepository.Update(estate,estate.Code);
 
-            var updateState = _mapper.Map<UpdateCommandResponse>(request); 
+            var updateState = _mapper.Map<UpdateEstateCommandResponse>(request); 
             return updateState;
         }
 
