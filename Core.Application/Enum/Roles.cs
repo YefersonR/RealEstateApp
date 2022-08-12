@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure.Identity.Entities
+namespace Core.Application.Enum
 {
-    public class AccountService
+    public enum Roles
     {
+        Cliente,
+        Agente,
+        Administrador,
+        Desarrollador
     }
 }

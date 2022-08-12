@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Domain.Entities
 {
-    public class Estates : AuditableBaseEntity
+    public class Estate : AuditableBaseEntity
     {
         public string Code { get; set; }
         public double Price { get; set; }
@@ -22,10 +22,10 @@ namespace Core.Domain.Entities
         public int SellTypeId { get; set; }
 
         //public Features Features { get; set; }
-        public SellTypes SellTypes { get; set; }
-        public EstateTypes EstateTypes { get; set; }
+        public SellType SellTypes { get; set; }
+        public EstateType EstateTypes { get; set; }
         public ICollection<EstatesImg> EstatesImgs { get; set; }
-        public ICollection<Favorites> Favorites { get; set; }
+        public ICollection<Favorite> Favorites { get; set; }
 
     }
 }

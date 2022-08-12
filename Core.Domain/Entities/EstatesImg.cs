@@ -11,6 +11,6 @@ namespace Core.Domain.Entities
     {
         public string ImgUrl { get; set; }
         public int EstatesId { get; set; }
-        public Estates Estates { get; set; }
+        public Estate Estates { get; set; }
     }
 }

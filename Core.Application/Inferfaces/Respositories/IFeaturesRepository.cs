@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SocialNetwork.Core.Application.Interface.Repositories
+namespace Core.Application.Interface.Repositories
 {
-    public interface IFeaturesRepository : IGenericRepository<Features>
+    public interface IFeaturesRepository : IGenericRepository<Feature>
     {
 
     }

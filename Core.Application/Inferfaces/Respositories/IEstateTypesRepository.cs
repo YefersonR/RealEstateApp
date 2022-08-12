@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SocialNetwork.Core.Application.Interface.Repositories
+namespace Core.Application.Interface.Repositories
 {
-    public interface IEstateTypesRepository : IGenericRepository<EstateTypes>
+    public interface IEstateTypesRepository : IGenericRepository<EstateType>
     {
 
     }

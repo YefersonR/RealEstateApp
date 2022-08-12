@@ -1,6 +1,6 @@
-﻿using Core.Domain.Entities;
+﻿using Core.Application.Interface.Repositories;
+using Core.Domain.Entities;
 using Infrastructure.Persistence.Context;
-using SocialNetwork.Core.Application.Interface.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence.Repositories
 {
-    public class SellTypesRepository : GenericRepository<SellTypes>, ISellTypesRepository
+    public class SellTypesRepository : GenericRepository<SellType>, ISellTypesRepository
     {
         private readonly RealEstateContext _dbContext;
 

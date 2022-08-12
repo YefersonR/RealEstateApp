@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Core.Domain.Entities
 {
-    public class Favorites : AuditableBaseEntity
+    public class Favorite : AuditableBaseEntity
     {
         public string UserId { get; set; }
         public int EstateId { get; set; }
         
-        public Estates Estates { get; set; }
+        public Estate Estates { get; set; }
     }
 }

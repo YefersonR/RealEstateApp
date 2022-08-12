@@ -1,16 +1,14 @@
-﻿using Core.Domain.Commons;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Domain.Entities
+namespace Core.Application.DTOS.Estates
 {
-    public class SellTypes : AuditableBaseEntity
+    public class SellTypeRequest
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public ICollection<Estates> Estates { get; set; }
     }
 }

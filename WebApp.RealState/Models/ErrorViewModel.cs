@@ -1,6 +1,6 @@
-using System;
+﻿using System;
 
-namespace WebApp.RealEstate.Models
+namespace WebApp.RealState.Models
 {
     public class ErrorViewModel
     {

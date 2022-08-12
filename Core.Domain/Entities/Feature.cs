@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Core.Domain.Entities
 {
-    public class Features : AuditableBaseEntity
+    public class Feature : AuditableBaseEntity
     {
         public string Name { get; set; }
         public string Description { get; set; }
         
-        public ICollection<Estates> Estates { get; set; }
+        public ICollection<Estate> Estates { get; set; }
     }
 }
