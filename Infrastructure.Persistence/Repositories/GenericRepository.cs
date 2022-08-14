@@ -49,7 +49,7 @@ namespace Infrastructure.Persistence.Repositories
             foreach (var property in properties)
             {
                 query = query.Include(property);
-            }
+            }   
             return await query.ToListAsync();
         }
 
