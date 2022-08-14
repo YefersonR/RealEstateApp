@@ -31,7 +31,8 @@ namespace Core.Application.Feactures.Estates.Queries.GetEstateByCode
         }
         public async Task<EstateRequest> GetWithIncludeByCode(string Code)
         {
-            var estate = await _estatesRepository.GetByCodeAsync(Code);
+            var estateList = await _estatesRepository.GetAllWhitIncludes(new List<string> { "SellTypes", "EstateTypes", "EstatesImgs" });
+            var estate = estateList.Where(x => x.Code == Code).FirstOrDefault();
             var estateRequest = _mapper.Map<EstateRequest>(estate);
             return estateRequest;
         }

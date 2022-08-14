@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(RealEstateContext))]
-    [Migration("20220809011535_init")]
-    partial class init
+    [Migration("20220812181508_GeneralThingsTest")]
+    partial class GeneralThingsTest
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,37 +21,7 @@ namespace Infrastructure.Persistence.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Core.Domain.Entities.EstateTypes", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Modified")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EstateTypes");
-                });
-
-            modelBuilder.Entity("Core.Domain.Entities.Estates", b =>
+            modelBuilder.Entity("Core.Domain.Entities.Estate", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -79,7 +49,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.Property<int>("EstateTypesId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("FeaturesId")
+                    b.Property<int?>("FeatureId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Modified")
@@ -104,11 +74,41 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.HasIndex("EstateTypesId");
 
-                    b.HasIndex("FeaturesId");
+                    b.HasIndex("FeatureId");
 
                     b.HasIndex("SellTypeId");
 
                     b.ToTable("Estates");
+                });
+
+            modelBuilder.Entity("Core.Domain.Entities.EstateType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Modified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EstateTypes");
                 });
 
             modelBuilder.Entity("Core.Domain.Entities.EstatesImg", b =>
@@ -143,7 +143,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("EstatesImg");
                 });
 
-            modelBuilder.Entity("Core.Domain.Entities.Favorites", b =>
+            modelBuilder.Entity("Core.Domain.Entities.Favorite", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -175,7 +175,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Favorites");
                 });
 
-            modelBuilder.Entity("Core.Domain.Entities.Features", b =>
+            modelBuilder.Entity("Core.Domain.Entities.Feature", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -205,7 +205,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("Features");
                 });
 
-            modelBuilder.Entity("Core.Domain.Entities.SellTypes", b =>
+            modelBuilder.Entity("Core.Domain.Entities.SellType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -235,19 +235,19 @@ namespace Infrastructure.Persistence.Migrations
                     b.ToTable("SellTypes");
                 });
 
-            modelBuilder.Entity("Core.Domain.Entities.Estates", b =>
+            modelBuilder.Entity("Core.Domain.Entities.Estate", b =>
                 {
-                    b.HasOne("Core.Domain.Entities.EstateTypes", "EstateTypes")
+                    b.HasOne("Core.Domain.Entities.EstateType", "EstateTypes")
                         .WithMany("Estates")
                         .HasForeignKey("EstateTypesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Domain.Entities.Features", null)
+                    b.HasOne("Core.Domain.Entities.Feature", null)
                         .WithMany("Estates")
-                        .HasForeignKey("FeaturesId");
+                        .HasForeignKey("FeatureId");
 
-                    b.HasOne("Core.Domain.Entities.SellTypes", "SellTypes")
+                    b.HasOne("Core.Domain.Entities.SellType", "SellTypes")
                         .WithMany("Estates")
                         .HasForeignKey("SellTypeId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -260,7 +260,7 @@ namespace Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Core.Domain.Entities.EstatesImg", b =>
                 {
-                    b.HasOne("Core.Domain.Entities.Estates", "Estates")
+                    b.HasOne("Core.Domain.Entities.Estate", "Estates")
                         .WithMany("EstatesImgs")
                         .HasForeignKey("EstatesId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -269,9 +269,9 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("Estates");
                 });
 
-            modelBuilder.Entity("Core.Domain.Entities.Favorites", b =>
+            modelBuilder.Entity("Core.Domain.Entities.Favorite", b =>
                 {
-                    b.HasOne("Core.Domain.Entities.Estates", "Estates")
+                    b.HasOne("Core.Domain.Entities.Estate", "Estates")
                         .WithMany("Favorites")
                         .HasForeignKey("EstateId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -280,24 +280,24 @@ namespace Infrastructure.Persistence.Migrations
                     b.Navigation("Estates");
                 });
 
-            modelBuilder.Entity("Core.Domain.Entities.EstateTypes", b =>
-                {
-                    b.Navigation("Estates");
-                });
-
-            modelBuilder.Entity("Core.Domain.Entities.Estates", b =>
+            modelBuilder.Entity("Core.Domain.Entities.Estate", b =>
                 {
                     b.Navigation("EstatesImgs");
 
                     b.Navigation("Favorites");
                 });
 
-            modelBuilder.Entity("Core.Domain.Entities.Features", b =>
+            modelBuilder.Entity("Core.Domain.Entities.EstateType", b =>
                 {
                     b.Navigation("Estates");
                 });
 
-            modelBuilder.Entity("Core.Domain.Entities.SellTypes", b =>
+            modelBuilder.Entity("Core.Domain.Entities.Feature", b =>
+                {
+                    b.Navigation("Estates");
+                });
+
+            modelBuilder.Entity("Core.Domain.Entities.SellType", b =>
                 {
                     b.Navigation("Estates");
                 });

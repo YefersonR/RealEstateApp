@@ -17,12 +17,14 @@ namespace Core.Application.Mapper
         {
             CreateMap<GetAllEstatesQuery, GetAllEstatesParameters>()
                 .ReverseMap();
+            
             CreateMap<Estate, EstateRequest>()
                 .ReverseMap()
                 .ForMember(x => x.Created, opt=>opt.Ignore())
                 .ForMember(x => x.CreatedBy, opt => opt.Ignore())
                 .ForMember(x => x.Modified, opt => opt.Ignore())
                 .ForMember(x => x.ModifiedBy, opt => opt.Ignore());
+            
             CreateMap<Estate, CreateEstateCommand>()
                 .ReverseMap()
                 .ForMember(x => x.Created, opt => opt.Ignore())
@@ -30,6 +32,22 @@ namespace Core.Application.Mapper
                 .ForMember(x => x.Modified, opt => opt.Ignore())
                 .ForMember(x => x.ModifiedBy, opt => opt.Ignore());
 
-        }
+            CreateMap<SellType, SellTypeRequest>()
+                .ReverseMap()
+                .ForMember(x => x.Estates, opt => opt.Ignore())
+                .ForMember(x => x.Created, opt => opt.Ignore())
+                .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+                .ForMember(x => x.Modified, opt => opt.Ignore())
+                .ForMember(x => x.ModifiedBy, opt => opt.Ignore());
+
+            CreateMap<EstateType, EstateTypeRequest>()
+                .ReverseMap()
+                .ForMember(x => x.Estates, opt => opt.Ignore())
+                .ForMember(x => x.Created, opt => opt.Ignore())
+                .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+                .ForMember(x => x.Modified, opt => opt.Ignore())
+                .ForMember(x => x.ModifiedBy, opt => opt.Ignore());
+
+        }   
     }
 }
