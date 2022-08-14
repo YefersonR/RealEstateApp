@@ -27,9 +27,9 @@ namespace WebApp.RealEstate
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
                     await DefaultRoles.Seed(userManager, roleManager);
-                    await DefaultAdmin.Seed(userManager,roleManager);
-                    await DefaultAgent.Seed(userManager, roleManager);
                     await DefaultClient.Seed(userManager, roleManager);
+                    await DefaultAgent.Seed(userManager, roleManager);
+                    await DefaultAdmin.Seed(userManager,roleManager);
 
                 }
                 catch (Exception ex)

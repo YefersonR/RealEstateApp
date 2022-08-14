@@ -16,13 +16,14 @@ namespace Infrastructure.Identity.Seeds
             {
                 Name="",
                 LastName="",
+                UserName="",
                 Email="",
                 PhoneNumber="",
                 EmailConfirmed=true
             };
             if(userManager.Users.All(u=>u.Id != user.Id))
             {
-                var userEmail = userManager.FindByEmailAsync(user.Email);
+                var userEmail = await userManager.FindByEmailAsync(user.Email);
                 if(userEmail == null)
                 {
                     await userManager.CreateAsync(user,"123Pa$$word!");

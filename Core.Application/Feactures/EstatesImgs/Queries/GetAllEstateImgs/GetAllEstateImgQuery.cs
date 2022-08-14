@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.EstatesImgs.Queries.GetAllEstateImgs
 {
-    public class GetAllEstateImgCommand : IRequest<List<EstateImgRequest>>
+    public class GetAllEstateImgQuery : IRequest<List<EstateImgRequest>>
     {
         public string EsteteCode { get; set; }
 
     }
-    public class GetAllEstateImgCommandHandler : IRequestHandler<GetAllEstateImgCommand, List<EstateImgRequest>>
+    public class GetAllEstateImgCommandHandler : IRequestHandler<GetAllEstateImgQuery, List<EstateImgRequest>>
     {
-        public Task<List<EstateImgRequest>> Handle(GetAllEstateImgCommand request, CancellationToken cancellationToken)
+        public Task<List<EstateImgRequest>> Handle(GetAllEstateImgQuery request, CancellationToken cancellationToken)
         {
             throw new NotImplementedException();
         }

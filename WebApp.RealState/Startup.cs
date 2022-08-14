@@ -4,10 +4,11 @@ using Infrastructure.Identity;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using WebApp.RealState.Middleware;
 
 namespace WebApp.RealEstate
 {
@@ -30,6 +31,9 @@ namespace WebApp.RealEstate
             services.AddApplicationLayer(Configuration);
 
             services.AddSession();
+            services.AddScoped<LoginAuthorize>();
+            services.AddSingleton<IHttpContextAccessor,HttpContextAccessor>();
+            services.AddTransient<ValidateUser, ValidateUser>();
 
         }
 
@@ -49,17 +53,16 @@ namespace WebApp.RealEstate
             app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Account}/{action=Index}/{id?}");
             });
         }
     }

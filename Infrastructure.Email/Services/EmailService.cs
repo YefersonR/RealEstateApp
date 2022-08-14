@@ -36,6 +36,7 @@ namespace Infrastructure.Shared.Services
 
                 using (SmtpClient smtp = new())
                 {
+                    smtp.ServerCertificateValidationCallback = (s, c, h, e) => true;
                     smtp.Connect(_emailSettings.SmtpHost,_emailSettings.SmtpPort,SecureSocketOptions.StartTls);
                     smtp.Authenticate(_emailSettings.SmtpUser,_emailSettings.SmtpPass);
                     await smtp.SendAsync(mailmessage);

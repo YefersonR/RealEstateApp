@@ -84,6 +84,7 @@ namespace Infrastructure.Identity.Services
                 LastName = request.LastName,
                 UserName = request.UserName,
                 PhoneNumber = request.Phone,
+                ImageProfile = request.ImageProfile
 
             };
 
@@ -110,7 +111,7 @@ namespace Infrastructure.Identity.Services
         {
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            var route = "User/EmailConfirm";
+            var route = "Account/EmailConfirm";
             var url = new Uri(string.Concat($"{origin}/", route));
             var verificationUrl = QueryHelpers.AddQueryString(url.ToString(), "userId", user.Id);
             verificationUrl = QueryHelpers.AddQueryString(verificationUrl, "token", code);
@@ -139,7 +140,7 @@ namespace Infrastructure.Identity.Services
         {
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
             code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            var route = "User/ResetPassword";
+            var route = "Account/ResetPassword";
             var url = new Uri(string.Concat($"{origin}/", route));
             var verificationUrl = QueryHelpers.AddQueryString(url.ToString(), "token", code);
 
