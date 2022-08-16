@@ -129,7 +129,7 @@ namespace Core.Application.Mapper
             #region Feactures Feactures
             CreateMap<GetAllFeacturesQuery, GetAllFeacturesParameters>()
                 .ReverseMap();
-            CreateMap<Feature, FeacturesRequest>()
+            CreateMap<Feature, FeaturesRequest>()
                 .ReverseMap()
                 .ForMember(x => x.Created, opt => opt.Ignore())
                 .ForMember(x => x.CreatedBy, opt => opt.Ignore())
@@ -162,6 +162,13 @@ namespace Core.Application.Mapper
             CreateMap<UpdateSellTypeCommand, UpdateSellTypeCommandResponse>()
               .ReverseMap();
             #endregion
+
+            CreateMap<FeaturesRelations, FeaturesRelationsRequest>()
+                .ReverseMap()
+                .ForMember(x => x.Created, opt => opt.Ignore())
+                .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+                .ForMember(x => x.Modified, opt => opt.Ignore())
+                .ForMember(x => x.ModifiedBy, opt => opt.Ignore());
 
             #region User
             CreateMap<AuthenticationResponse, UserSaveViewModel>()

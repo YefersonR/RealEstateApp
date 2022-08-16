@@ -11,14 +11,14 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.Feactures.Queries.GetFeactureById
 {
-    public class GetFeactureByIdQuery : IRequest<FeacturesRequest>
+    public class GetFeactureByIdQuery : IRequest<FeaturesRequest>
     {
         public int Id
         {
             get; set;
         }
     }
-    public class GetFeactureByIdQueryHandler : IRequestHandler<GetFeactureByIdQuery, FeacturesRequest>
+    public class GetFeactureByIdQueryHandler : IRequestHandler<GetFeactureByIdQuery, FeaturesRequest>
     {
         private readonly IFeaturesRepository _featuresRepository;
         private readonly IMapper _mapper;
@@ -27,15 +27,15 @@ namespace Core.Application.Feactures.Feactures.Queries.GetFeactureById
             _featuresRepository = featuresRepository;
             _mapper = mapper;
         }
-        public async Task<FeacturesRequest> Handle(GetFeactureByIdQuery request, CancellationToken cancellationToken)
+        public async Task<FeaturesRequest> Handle(GetFeactureByIdQuery request, CancellationToken cancellationToken)
         {
             var estate = await GetWithIncludeById(request.Id);
             return estate;
         }
-        public async Task<FeacturesRequest> GetWithIncludeById(int Id)
+        public async Task<FeaturesRequest> GetWithIncludeById(int Id)
         {
             var estate = await _featuresRepository.GetByIdAsync(Id);
-            var estateRequest = _mapper.Map<FeacturesRequest>(estate);
+            var estateRequest = _mapper.Map<FeaturesRequest>(estate);
             return estateRequest;
         }
     }
