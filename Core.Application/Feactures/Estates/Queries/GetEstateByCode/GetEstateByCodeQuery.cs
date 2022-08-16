@@ -18,9 +18,11 @@ namespace Core.Application.Feactures.Estates.Queries.GetEstateByCode
     public class GetEstateByIdQueryHandler : IRequestHandler<GetEstateByCodeQuery, EstateRequest>
     {
         private readonly IEstatesRepository _estatesRepository;
+        private readonly IFeaturesRepository _featuresRepository;
         private readonly IMapper _mapper;
-        public GetEstateByIdQueryHandler(IEstatesRepository estatesRepository, IMapper mapper)
+        public GetEstateByIdQueryHandler(IEstatesRepository estatesRepository, IFeaturesRepository featuresRepository, IMapper mapper)
         {
+            _featuresRepository = featuresRepository;
             _estatesRepository = estatesRepository;
             _mapper = mapper;
         }
@@ -31,9 +33,10 @@ namespace Core.Application.Feactures.Estates.Queries.GetEstateByCode
         }
         public async Task<EstateRequest> GetWithIncludeByCode(string Code)
         {
-            var estateList = await _estatesRepository.GetAllWhitIncludes(new List<string> { "SellTypes", "EstateTypes", "EstatesImgs" });
+            var estateList = await _estatesRepository.GetAllWhitIncludes(new List<string> { "SellTypes", "EstateTypes", "EstatesImgs", "FeaturesRelations" });
             var estate = estateList.Where(x => x.Code == Code).FirstOrDefault();
             var estateRequest = _mapper.Map<EstateRequest>(estate);
+            estateRequest.FeaturesRelations.ForEach(x => x.Features = _mapper.Map<FeaturesRequest>(_featuresRepository.GetByIdAsync(x.FeatureId).Result));
             return estateRequest;
         }
     }

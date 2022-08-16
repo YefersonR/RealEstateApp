@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Application.DTOS.Estates
 {
-    public class FeacturesRequest
+    public class FeaturesRequest
     {
         public string Name { get; set; }
         public string Description { get; set; }

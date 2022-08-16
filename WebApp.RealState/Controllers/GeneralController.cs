@@ -16,7 +16,7 @@ namespace WebApp.RealState.Controllers
         {
             ViewBag.IsLoggin = true; //
             return View(await Mediator.Send(new GetAllEstatesQuery() 
-                        { Price = parameters.Price, Rooms = parameters.Rooms, Toilets = parameters.Toilets, SellTypeId = parameters.SellTypeId }));
+                        { MaxPrice = parameters.MaxPrice, MinPrice = parameters.MinPrice, Rooms = parameters.Rooms, Toilets = parameters.Toilets, SellTypeId = parameters.SellTypeId }));
         }
 
         public async Task<IActionResult> Estate(string code)

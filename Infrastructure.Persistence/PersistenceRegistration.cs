@@ -36,6 +36,7 @@ namespace Infrastructure.Persistence
             services.AddTransient<IFavoritesRepository, FavoritesRepository>();
             services.AddTransient<IFeaturesRepository, FeaturesRepository>();
             services.AddTransient<ISellTypesRepository, SellTypesRepository>();
+            services.AddTransient<IFeaturesRelationsRepository, FeaturesRelationsRepository>();
         }
     }
 }
