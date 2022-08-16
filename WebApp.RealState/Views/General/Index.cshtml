@@ -19,20 +19,30 @@
                 <th scope="col">CantidadDeHabitaciones</th>
                 <th scope="col">CantidadDeBaños</th>
                 <th scope="col">Tamaño</th>
+                <th scope="col">Info</th>
+                @if(ViewBag.IsLoggin == true)
+                {
+                    <th scope="col">AddToFavorite</th>
+                }
             </tr>
         </thead>
         <tbody>
             @foreach(var data in Model){
                 <tr>
-                    <th scope="row">ID</th>
+                    <th scope="row">@data.Code</th>
                     <td>@data.EstateTypes.Name</td>
-                    <td>LinkuImg</td>
+                    <td>@data.EstatesImgs.FirstOrDefault().ImgUrl</td>
                     <td>@data.Code</td>c
                     <td>@data.SellTypes.Name</td>
                     <td>@data.Price</td>
                     <td>@data.Rooms</td>
                     <td>@data.Toilets</td>
                     <td>@data.Area</td>
+                    <td><a class="btn" asp-controller="General" asp-action="Estate" asp-route-code="@data.Code"> Info </a></td>
+                    @if(ViewBag.IsLoggin == true)
+                    {
+                        <td><a class="btn" asp-controller="Client" asp-action="AddFav" asp-route-EstateId="@data.Id"> Add </a></td>
+                    }
                 </tr>
             }
         </tbody>

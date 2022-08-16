@@ -11,7 +11,7 @@ using Core.Application.Feactures.EstateTypes.Commands.CreateEstateType;
 using Core.Application.Feactures.EstateTypes.Commands.UpdateEstateType;
 using Core.Application.Feactures.EstateTypes.Queries.GetAllEstateTypes;
 using Core.Application.Feactures.Favorites.Commands.CreateFavorite;
-using Core.Application.Feactures.Favorites.Queries.GetAllFavorites;
+using Core.Application.Feactures.Favorites.Queries.GetFavoritesById;
 using Core.Application.Feactures.Feactures.Commands.CreateFeacture;
 using Core.Application.Feactures.Feactures.Commands.UpdateFeacture;
 using Core.Application.Feactures.Feactures.Queries.GetAllFeactures;
@@ -32,14 +32,21 @@ namespace Core.Application.Mapper
             #region Estate Feactures
             CreateMap<GetAllEstatesQuery, GetAllEstatesParameters>()
                 .ReverseMap();
-            
+
             CreateMap<Estate, EstateRequest>()
                 .ReverseMap()
-                .ForMember(x => x.Created, opt=>opt.Ignore())
+                .ForMember(x => x.Created, opt => opt.Ignore())
                 .ForMember(x => x.CreatedBy, opt => opt.Ignore())
                 .ForMember(x => x.Modified, opt => opt.Ignore())
                 .ForMember(x => x.ModifiedBy, opt => opt.Ignore());
-            
+
+            CreateMap<Estate, FavoriteRequest>()
+                .ReverseMap()
+                .ForMember(x => x.Created, opt => opt.Ignore())
+                .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+                .ForMember(x => x.Modified, opt => opt.Ignore())
+                .ForMember(x => x.ModifiedBy, opt => opt.Ignore());
+
             CreateMap<Estate, CreateEstateCommand>()
                 .ReverseMap()
                 .ForMember(x => x.Created, opt => opt.Ignore())
@@ -103,7 +110,7 @@ namespace Core.Application.Mapper
               .ReverseMap();
             #endregion
             #region Favorites Feactures
-            CreateMap<GetAllFavoritesQuery, GetAllFavoritesParameters>()
+            CreateMap<GetFavoritesByIdQuery, GetFavoritesByIdParameters>()
                 .ReverseMap();
             CreateMap<Favorite, FavoriteRequest>()
                 .ReverseMap()
