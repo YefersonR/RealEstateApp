@@ -1,1 +1,32 @@
-﻿
+﻿@using Core.Application.ViewModels.User
+@model List<AgentesViewModel>
+
+
+<div class="Container">
+    <div>
+        <form asp-controller="General" asp-action="Index">
+        </form>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Img</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (AgentesViewModel data in Model)
+            {
+                <tr>
+                    <th scope="row">@data.Name</th>
+                    <td>@data.LastName</td>
+                    <td>@data.ImageProfile</td>
+         
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

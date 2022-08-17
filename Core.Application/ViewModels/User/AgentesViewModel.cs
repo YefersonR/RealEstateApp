@@ -8,7 +8,7 @@ namespace Core.Application.ViewModels.User
 {
     public class AgentesViewModel
     {
-        public string ImgProfile { get; set; }
+        public string ImageProfile { get; set; }
         public string Name{ get; set; }
         public string LastName { get; set; }
 

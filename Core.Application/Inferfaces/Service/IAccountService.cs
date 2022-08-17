@@ -1,4 +1,5 @@
 ﻿using Core.Application.DTOS.Account;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Core.Application.Inferfaces.Service
@@ -11,6 +12,8 @@ namespace Core.Application.Inferfaces.Service
         Task<RegisterResponse> Register(RegisterRequest request, string origin);
         Task<GenericResponse> UpdateUser(string userId, RegisterRequest request);
         Task<GenericResponse> ResetPassword(ResetPasswordRequest request);
+        List<AuthenticationResponse> GetAllAgents();
+        Task<AuthenticationResponse> GetAgentById(string Id);
         Task SignOut();
     }
 }

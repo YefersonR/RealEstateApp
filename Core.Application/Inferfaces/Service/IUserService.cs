@@ -17,5 +17,7 @@ namespace Core.Application.Inferfaces.Service
         Task<string> EmailConfirm(string userId, string token);
         Task<GenericResponse> ForgotPassword(ForgotPasswordViewModel request, string origin);
         Task<GenericResponse> ResetPassword(ResetPasswordViewModel request);
+        List<AgentesViewModel> GetAllAgents();
+        Task<AgentesViewModel> GetAgentById(string Id);
     }
 }

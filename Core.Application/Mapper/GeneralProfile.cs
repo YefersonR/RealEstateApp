@@ -175,6 +175,7 @@ namespace Core.Application.Mapper
                 .ForMember(x=>x.HasError,opt=>opt.Ignore())
                 .ForMember(x => x.Error, opt => opt.Ignore())
                 .ReverseMap();
+
             CreateMap<AuthenticationRequest, LoginViewModel>()
                .ForMember(x => x.HasError, opt => opt.Ignore())
                .ForMember(x => x.Error, opt => opt.Ignore())
@@ -183,12 +184,7 @@ namespace Core.Application.Mapper
                .ForMember(x => x.HasError, opt => opt.Ignore())
                .ForMember(x => x.Error, opt => opt.Ignore())
                .ReverseMap();
-            CreateMap<UpdateUserRequest, UserSaveViewModel>()
-           .ForMember(x => x.HasError, opt => opt.Ignore())
-           .ForMember(x => x.Error, opt => opt.Ignore())
-           .ReverseMap()
-           .ForMember(x => x.Id, opt => opt.Ignore());
-
+            
             CreateMap<ForgotPasswordRequest, ForgotPasswordViewModel>()
                .ForMember(x => x.HasError, opt => opt.Ignore())
                .ForMember(x => x.Error, opt => opt.Ignore())

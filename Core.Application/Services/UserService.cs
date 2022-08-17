@@ -57,6 +57,27 @@ namespace Core.Application.Services
             ResetPasswordRequest resetRequest = _mapper.Map<ResetPasswordRequest>(request);
             return await _accountService.ResetPassword(resetRequest);
         }
+        public List<AgentesViewModel> GetAllAgents()
+        {
+            var agentes  = _accountService.GetAllAgents();
+            var listAgents = agentes.Select(agentes => new AgentesViewModel
+            {
+                Name = agentes.Name,
+                LastName = agentes.LastName,
+                ImageProfile = agentes.ImageProfile,
 
+            }).ToList();
+            return listAgents;
+        }
+        public async Task<AgentesViewModel> GetAgentById(string Id)
+        {
+            var agente = await _accountService.GetAgentById(Id);
+            var agent = new AgentesViewModel();
+            agent.Name = agente.Name;
+            agent.LastName = agente.LastName;
+            agent.ImageProfile = agente.ImageProfile;
+
+            return agent;
+        }
     }
 }

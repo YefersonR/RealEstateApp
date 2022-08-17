@@ -88,7 +88,7 @@ namespace Infrastructure.Identity.Services
                 ImageProfile = request.ImageProfile
 
             };
-            if(request.UserType == Roles.Cliente.ToString())
+            if (request.UserType == Roles.Cliente.ToString())
             {
 
                 var result = await _userManager.CreateAsync(user, request.Password);
@@ -109,7 +109,7 @@ namespace Infrastructure.Identity.Services
                     Body = $"Please confirm your account visiting this URL {verificationUrl}",
                     Subject = "Confirm registration"
                 });
-            }else if(request.UserType == Roles.Agente.ToString())
+            } else if (request.UserType == Roles.Agente.ToString())
             {
                 var result = await _userManager.CreateAsync(user, request.Password);
                 if (!result.Succeeded)
@@ -250,41 +250,34 @@ namespace Infrastructure.Identity.Services
         //    return usersList;
         //}
 
-        //public async Task<List<UserGetAllViewModel>> GetAllVMUser()
-        //{
-        //    var users = _userManager.Users.ToList();
-        //    var all = users.Select(x => new UserGetAllViewModel
-        //    {
-        //        Id = x.Id,
-        //        UserName = x.UserName,
-        //        IsAdmin = false
-        //    }).ToList();
+        public List<AuthenticationResponse> GetAllAgents()
+        {
+            var users = _userManager.GetUsersInRoleAsync(Roles.Cliente.ToString()).Result.ToList();
+            var allAgents = users.Select(user => new AuthenticationResponse
+            {
+                Id = user.Id,
+                Name = user.Name,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                ImageProfile = user.ImageProfile,
 
-        //    var adminID = GetAdminUsers().Result;
-        //    foreach (var item in all)
-        //    {
-        //        var user = await _userManager.FindByIdAsync(item.Id);
-        //        item.IsActive = user.EmailConfirmed;
-        //        if (adminID.Contains(item.Id))
-        //        {
-        //            item.IsAdmin = true;
-        //        }
-        //        try
-        //        {
-        //            var i = _savingAccount.GetAllByUserID(item.Id).Result.ToList();
-        //            foreach (var data in i)
-        //            {
-        //                if (data.AccountNumber == user.SavingAccount)
-        //                {
-        //                    item.Monto = data.Amount;
-        //                }
-        //            }
-        //        }
-        //        catch (Exception e) { }
-        //    }
+            }).ToList();
+            return allAgents;
+        } 
+        public async Task<AuthenticationResponse> GetAgentById(string Id)
+        {
+            var user = await _userManager.FindByIdAsync(Id);
+            var agent = new AuthenticationResponse();
 
-        //    return all;
-        //}
+
+            agent.Id = user.Id;
+            agent.Name = user.Name;
+            agent.LastName = user.LastName;
+            agent.UserName = user.UserName;
+            agent.ImageProfile = user.ImageProfile;
+            
+            return agent;
+        }
         //public async Task ChangeUserState(string id)
         //{
         //    var user = await _userManager.FindByIdAsync(id);
