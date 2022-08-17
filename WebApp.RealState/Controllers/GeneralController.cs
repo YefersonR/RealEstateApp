@@ -17,8 +17,9 @@ namespace WebApp.RealState.Controllers
         private readonly IHttpContextAccessor _httpContext;
         private readonly AuthenticationResponse user;
 
-        public GeneralController()
+        public GeneralController(IHttpContextAccessor httpContext)
         {
+            _httpContext = httpContext;
             user = _httpContext.HttpContext.Session.Get<AuthenticationResponse>("user");
 
         }
