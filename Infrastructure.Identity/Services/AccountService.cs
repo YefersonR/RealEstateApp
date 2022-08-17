@@ -54,7 +54,7 @@ namespace Infrastructure.Identity.Services
             response.LastName = User.LastName;
             response.Email = User.Email;
             response.IsVerified = User.EmailConfirmed;
-            response.ImgProfie = User.ImageProfile;
+            response.ImageProfile = User.ImageProfile;
             var roles = await _userManager.GetRolesAsync(User).ConfigureAwait(false);
             response.Roles = roles.ToList();
 

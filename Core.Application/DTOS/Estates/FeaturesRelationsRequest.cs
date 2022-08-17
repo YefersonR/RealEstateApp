@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace Core.Application.DTOS.Estates
 {
-    public class FavoriteRequest
+    public class FeaturesRelationsRequest
     {
         public int Id { get; set; }
-        public string UserId { get; set; }
+        public int FeatureId { get; set; }
         public int EstateId { get; set; }
+
+        public FeaturesRequest Features { get; set; } 
         public EstateRequest Estates { get; set; }
     }
 }

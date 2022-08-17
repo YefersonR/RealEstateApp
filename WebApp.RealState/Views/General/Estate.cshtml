@@ -6,11 +6,17 @@
         @Model.Area
         @Model.Code
         @Model.Description
-        @Model.EstateTypes
+        @Model.EstateTypes.Name
         @Model.Price
         @Model.Toilets
         @Model.AgentId
-        @Model.SellTypes
+        @Model.SellTypes.Name
         @Model.Rooms
+        @foreach(var imgs in  Model.EstatesImgs){
+            @imgs.ImgUrl
+        }
+        @foreach(var features in  Model.FeaturesRelations){
+            @features.Features.Name
+        }
     </div>
 </div>

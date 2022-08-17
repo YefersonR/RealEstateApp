@@ -15,17 +15,15 @@ namespace Core.Domain.Entities
         public int Rooms { get; set; }
         public int Toilets { get; set; }
         public string Description { get; set; }
-        public string ImageProfile { get; set; }
         public int EstateTypesId { get; set; }
         public int AgentId { get; set; }        
-        //public List<int> FeaturesId { get; set; }
+        public List<Feature> FeaturesIds { get; set; }
         public int SellTypeId { get; set; }
-
-        //public Features Features { get; set; }
         public SellType SellTypes { get; set; }
         public EstateType EstateTypes { get; set; }
         public ICollection<EstatesImg> EstatesImgs { get; set; }
         public ICollection<Favorite> Favorites { get; set; }
+        public ICollection<FeaturesRelations> FeaturesRelations { get; set; }
 
     }
 }

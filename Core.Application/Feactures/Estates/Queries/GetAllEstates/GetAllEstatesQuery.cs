@@ -14,7 +14,8 @@ namespace Core.Application.Feactures.Estates.Queries.GetAllEstates
     public class GetAllEstatesQuery : IRequest<List<EstateRequest>>
     {
         public int? SellTypeId { get; set; }
-        public double? Price { get; set; }
+        public double? MaxPrice { get; set; }
+        public double? MinPrice { get; set; }
         public int? Rooms { get; set; }
         public int? Toilets { get; set; }
 
@@ -39,18 +40,26 @@ namespace Core.Application.Feactures.Estates.Queries.GetAllEstates
         public async Task<List<EstateRequest>> GetAllWithFilter(GetAllEstatesParameters parameters)
         {
             var estateList = await _estatesRepository.GetAllWhitIncludes(new List<string> { "SellTypes", "EstateTypes", "EstatesImgs" });
+            
+
             if(parameters.Toilets != null)
             {
                 estateList = estateList.Where(x => x.Toilets == parameters.Toilets).ToList();
             }
-            if (parameters.Price != null)
-            {
-                estateList = estateList.Where(x => x.Price == parameters.Price).ToList();
-            }
+            
             if (parameters.Rooms != null)
             {
                 estateList = estateList.Where(x => x.Rooms == parameters.Rooms).ToList();
             }
+
+            if (parameters.MaxPrice != null)
+            {
+                estateList = estateList.Where(x => x.Price <= parameters.MaxPrice).ToList();
+            }
+
+            parameters.MinPrice = parameters.MinPrice == null ? 0 : parameters.MinPrice;
+            estateList = estateList.Where(x => x.Price >= parameters.MinPrice).ToList();
+
             var statesRequest = _mapper.Map<List<EstateRequest>>(estateList);
             
             return statesRequest;

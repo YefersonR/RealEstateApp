@@ -20,6 +20,7 @@ namespace Infrastructure.Persistence.Context
         public DbSet<Favorite> Favorites { get; set; }
         public DbSet<Feature> Features { get; set; }
         public DbSet<SellType> SellTypes { get; set; }
+        public DbSet<FeaturesRelations> FeaturesRelations { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
@@ -48,6 +49,7 @@ namespace Infrastructure.Persistence.Context
             modelBuilder.Entity<Favorite>().ToTable("Favorites");
             modelBuilder.Entity<Feature>().ToTable("Features");
             modelBuilder.Entity<SellType>().ToTable("SellTypes");
+            modelBuilder.Entity<FeaturesRelations>().ToTable("FeaturesRelations");
 
             modelBuilder.Entity<Estate>().HasKey(x => x.Id);
             modelBuilder.Entity<EstatesImg>().HasKey(x => x.Id);
@@ -55,6 +57,7 @@ namespace Infrastructure.Persistence.Context
             modelBuilder.Entity<Favorite>().HasKey(x => x.Id);
             modelBuilder.Entity<SellType>().HasKey(x => x.Id);
             modelBuilder.Entity<Feature>().HasKey(x => x.Id);
+            modelBuilder.Entity<FeaturesRelations>().HasKey(x => x.Id);
 
             modelBuilder.Entity<Estate>().HasMany<EstatesImg>(x => x.EstatesImgs).WithOne(x => x.Estates).HasForeignKey(x => x.EstatesId)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -65,8 +68,8 @@ namespace Infrastructure.Persistence.Context
             modelBuilder.Entity<Estate>().HasMany<Favorite>(x => x.Favorites).WithOne(x => x.Estates).HasForeignKey(x => x.EstateId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            //modelBuilder.Entity<Features>().HasMany<Estates>(x => x.Estates).WithOne(x => x.Features).HasForeignKey(x => x.FeaturesId)
-              //  .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Estate>().HasMany<FeaturesRelations>(x => x.FeaturesRelations).WithOne(x => x.Estates).HasForeignKey(x => x.EstateId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<SellType>().HasMany<Estate>(x => x.Estates).WithOne(x => x.SellTypes).HasForeignKey(x => x.SellTypeId)
                 .OnDelete(DeleteBehavior.NoAction);
