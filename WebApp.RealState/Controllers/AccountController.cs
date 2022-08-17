@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApp.RealState.Middleware;
@@ -15,9 +16,15 @@ namespace WebApp.RealEstate.Controllers
     public class AccountController : Controller
     {
         private readonly IUserService _userService;
+        private readonly UploadImages _upload;
+        private readonly IHttpContextAccessor _httpContext;
+        private readonly AuthenticationResponse user;
+
         public AccountController(IUserService userService)
         {
             _userService = userService;
+            _upload = new();
+
         }
         [ServiceFilter(typeof(LoginAuthorize))]
         public IActionResult Index()
@@ -53,26 +60,33 @@ namespace WebApp.RealEstate.Controllers
         [ServiceFilter(typeof(LoginAuthorize))]
         public IActionResult Register()
         {
+
             return View(new UserSaveViewModel());
         }
         [ServiceFilter(typeof(LoginAuthorize))]
         [HttpPost]
         public async Task<IActionResult> Register(UserSaveViewModel userSaveView)
         {
+            
             if (!ModelState.IsValid)
             {
                 return View(userSaveView);
             }
             var origin = Request.Headers["origin"];
-            GenericResponse response = await _userService.Regiter(userSaveView,origin);
+            RegisterResponse response = await _userService.Regiter(userSaveView,origin);
+
             if (response.HasError)
             {
                 userSaveView.HasError = response.HasError;
                 userSaveView.Error = response.Error;
                 return View(userSaveView);
             }
+            if (response.Id != null && response.Id !="")
+            {
+                userSaveView.ImageProfile = _upload.UploadFile(userSaveView.File,response.Id, "ImgProfile");
+                await _userService.UpdateUser(response.Id,userSaveView);
+            }
             return RedirectToRoute(new {controller="Account", action="Index"});
-
         }
 
         [ServiceFilter(typeof(LoginAuthorize))]
@@ -128,5 +142,6 @@ namespace WebApp.RealEstate.Controllers
             return RedirectToRoute(new { controller = "Account", action = "Index" });
 
         }
+
     }
 }

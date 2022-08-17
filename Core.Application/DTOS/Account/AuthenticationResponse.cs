@@ -13,6 +13,8 @@ namespace Core.Application.DTOS.Account
         public string LastName { get; set; }
         public string UserName { get; set;}
         public string Email { get; set; }
+        public string ImgProfie { get; set; }
+
         public List<string> Roles { get; set; }
         public bool IsVerified { get; set; }
         public bool HasError { get; set; } = false;

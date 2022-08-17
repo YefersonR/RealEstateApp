@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -21,7 +22,13 @@ namespace Core.Application.ViewModels.User
         [Required(ErrorMessage = "Debe colocar el nombre de usuario")]
         [DataType(DataType.Text)]
         public string UserName { get; set; }
+        
+        [DataType(DataType.Text)]
         public string ImageProfile { get; set; }
+        
+        
+        [DataType(DataType.Upload)]
+        public IFormFile File { get; set; }
 
         [Required(ErrorMessage = "Debe colocar la contraseña")]
         [DataType(DataType.Password)]
@@ -32,6 +39,7 @@ namespace Core.Application.ViewModels.User
         [Required(ErrorMessage = "Debe colocar el numero telefonico")]
         [DataType(DataType.Text)]
         public string Phone { get; set; }
+        public string UserType { get; set; }
         public bool HasError{ get; set; }
         public string Error { get; set; }
 

@@ -32,7 +32,7 @@ namespace Core.Application.Feactures.Estates.Queries.GetAllEstates
         {
             var parameters = _mapper.Map<GetAllEstatesParameters>(request); 
             var estateList = await GetAllWithFilter(parameters);
-            if (estateList == null || estateList.Count == 0) throw new Exception("State not found");
+            //if (estateList == null || estateList.Count == 0) throw new Exception("State not found");
             return estateList;
         }
 

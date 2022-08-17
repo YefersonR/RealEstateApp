@@ -14,6 +14,7 @@ namespace Core.Application.DTOS.Estates
         public int Rooms { get; set; }
         public int Toilets { get; set; }
         public string Description { get; set; }
+        public string ImageProfile { get; set; }
         public int AgentId { get; set; }
         
         //public int SellTypeId { get; set; }

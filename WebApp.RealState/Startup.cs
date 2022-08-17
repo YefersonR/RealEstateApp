@@ -62,7 +62,7 @@ namespace WebApp.RealEstate
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Account}/{action=Index}/{id?}");
+                    pattern: "{controller=General}/{action=Index}/{id?}");
             });
         }
     }

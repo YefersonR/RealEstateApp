@@ -8,7 +8,8 @@ namespace Core.Application.Inferfaces.Service
         Task<AuthenticationResponse> Authentication(AuthenticationRequest request);
         Task<string> ConfirmEmail(string userId, string token);
         Task<GenericResponse> ForgotPassword(ForgotPasswordRequest request, string origin);
-        Task<GenericResponse> RegisterClient(RegisterRequest request, string origin);
+        Task<RegisterResponse> Register(RegisterRequest request, string origin);
+        Task<GenericResponse> UpdateUser(string userId, RegisterRequest request);
         Task<GenericResponse> ResetPassword(ResetPasswordRequest request);
         Task SignOut();
     }

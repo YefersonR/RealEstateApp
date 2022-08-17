@@ -54,15 +54,16 @@ namespace Infrastructure.Identity.Services
             response.LastName = User.LastName;
             response.Email = User.Email;
             response.IsVerified = User.EmailConfirmed;
+            response.ImgProfie = User.ImageProfile;
             var roles = await _userManager.GetRolesAsync(User).ConfigureAwait(false);
             response.Roles = roles.ToList();
 
             return response;
         }
 
-        public async Task<GenericResponse> RegisterClient(RegisterRequest request, string origin)
+        public async Task<RegisterResponse> Register(RegisterRequest request, string origin)
         {
-            var response = new GenericResponse();
+            var response = new RegisterResponse();
             var UserNameExist = await _userManager.FindByNameAsync(request.UserName);
             if (UserNameExist != null)
             {
@@ -87,8 +88,51 @@ namespace Infrastructure.Identity.Services
                 ImageProfile = request.ImageProfile
 
             };
+            if(request.UserType == Roles.Cliente.ToString())
+            {
 
-            var result = await _userManager.CreateAsync(user, request.Password);
+                var result = await _userManager.CreateAsync(user, request.Password);
+                if (!result.Succeeded)
+                {
+                    response.HasError = true;
+                    response.Error = "A error occurred trying to register the user.";
+                    return response;
+
+                }
+                var regiteredUser = await _userManager.FindByEmailAsync(user.Email);
+                response.Id = regiteredUser.Id;
+                await _userManager.AddToRoleAsync(user, Roles.Cliente.ToString());
+                var verificationUrl = await SendVerificationEMailUrl(user, origin);
+                await _emailService.Send(new EmailRequest()
+                {
+                    To = user.Email,
+                    Body = $"Please confirm your account visiting this URL {verificationUrl}",
+                    Subject = "Confirm registration"
+                });
+            }else if(request.UserType == Roles.Agente.ToString())
+            {
+                var result = await _userManager.CreateAsync(user, request.Password);
+                if (!result.Succeeded)
+                {
+                    response.HasError = true;
+                    response.Error = "A error occurred trying to register the user.";
+                    return response;
+
+                }
+                var regiteredUser = await _userManager.FindByEmailAsync(user.Email);
+                response.Id = regiteredUser.Id;
+                await _userManager.AddToRoleAsync(user, Roles.Agente.ToString());
+            }
+
+            return response;
+        }
+        public async Task<GenericResponse> UpdateUser(string userId, RegisterRequest request)
+        {
+            var response = new RegisterResponse();
+            var user = await _userManager.FindByIdAsync(userId);
+            user.ImageProfile = request.ImageProfile;
+
+            var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
             {
                 response.HasError = true;
@@ -96,14 +140,6 @@ namespace Infrastructure.Identity.Services
                 return response;
 
             }
-            await _userManager.AddToRoleAsync(user, Roles.Cliente.ToString());
-            var verificationUrl = await SendVerificationEMailUrl(user, origin);
-            await _emailService.Send(new EmailRequest()
-            {
-                To = user.Email,
-                Body = $"Please confirm your account visiting this URL {verificationUrl}",
-                Subject = "Confirm registration"
-            });
             return response;
         }
 
@@ -196,5 +232,91 @@ namespace Infrastructure.Identity.Services
         {
             await _signInManager.SignOutAsync();
         }
+
+        //public List<UserViewModel> GetAllUser()
+        //{
+        //    var users = _userManager.Users.ToList();
+        //    List<UserViewModel> usersList = users.Select(user => new UserViewModel
+        //    {
+        //        Id = user.Id,
+        //        Name = user.Name,
+        //        LastName = user.LastName,
+        //        UserName = user.UserName,
+        //        Identification = user.Identification,
+        //        SavingsAccount = user.SavingAccount
+
+        //    }).ToList();
+
+        //    return usersList;
+        //}
+
+        //public async Task<List<UserGetAllViewModel>> GetAllVMUser()
+        //{
+        //    var users = _userManager.Users.ToList();
+        //    var all = users.Select(x => new UserGetAllViewModel
+        //    {
+        //        Id = x.Id,
+        //        UserName = x.UserName,
+        //        IsAdmin = false
+        //    }).ToList();
+
+        //    var adminID = GetAdminUsers().Result;
+        //    foreach (var item in all)
+        //    {
+        //        var user = await _userManager.FindByIdAsync(item.Id);
+        //        item.IsActive = user.EmailConfirmed;
+        //        if (adminID.Contains(item.Id))
+        //        {
+        //            item.IsAdmin = true;
+        //        }
+        //        try
+        //        {
+        //            var i = _savingAccount.GetAllByUserID(item.Id).Result.ToList();
+        //            foreach (var data in i)
+        //            {
+        //                if (data.AccountNumber == user.SavingAccount)
+        //                {
+        //                    item.Monto = data.Amount;
+        //                }
+        //            }
+        //        }
+        //        catch (Exception e) { }
+        //    }
+
+        //    return all;
+        //}
+        //public async Task ChangeUserState(string id)
+        //{
+        //    var user = await _userManager.FindByIdAsync(id);
+        //    user.EmailConfirmed = user.EmailConfirmed == false ? true : false;
+        //    await _userManager.UpdateAsync(user);
+        //}
+
+        //public async Task<List<string>> GetAdminUsers()
+        //{
+        //    var roleList = _userManager.GetUsersInRoleAsync("Admin").Result.ToList();
+        //    return roleList.Select(x => x.Id).ToList();
+        //}
+
+        //public async Task<string> GetSavingByID(string id)
+        //{
+        //    var savigs = await _userManager.FindByIdAsync(id);
+        //    return savigs.SavingAccount;
+        //}
+
+        //public async Task<UserSaveViewModel> GetAccountByid(string ID)
+        //{
+        //    var data = await _userManager.FindByIdAsync(ID);
+        //    return new UserSaveViewModel
+        //    {
+        //        Name = data.Name,
+        //        LastName = data.LastName,
+        //        UserName = data.UserName,
+        //        Identification = data.Identification,
+        //        Email = data.Email,
+        //        Id = data.Id,
+        //        SavingsAccount = data.SavingAccount
+        //    };
+        //}
     }
 }

@@ -1,9 +1,9 @@
 ﻿@using Core.Application.ViewModels.User
+@using Core.Application.Enum
 @model UserSaveViewModel
 
 @section Styles{
     <link href="~/css/User.css" rel="stylesheet" />
-
 }
 
 <div class="loginContainer">
@@ -19,7 +19,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         }
-    <form method="post" asp-controller="Account" asp-action="Register">
+    <form method="post" enctype="multipart/form-data" asp-controller="Account" asp-action="Register">
         <div class="field">
             <input asp-for="Name" placeholder="Ingrese su nombre" />
         </div>
@@ -27,13 +27,28 @@
             <input asp-for="LastName" placeholder="Ingrese su apellido" />
         </div>
         <div class="field">
-            <input asp-for="Email" placeholder="Ingrese su correo electronico" />
-        </div>
-        <div class="field">
             <input asp-for="Phone" placeholder="Ingrese su numero de telefono" />
         </div>
+
+        <div class="field img" style=" height: 70px; margin-bottom: 10px;">
+            <label>Imagen de usuario </label>
+            <input asp-for="File" />
+        </div>
+        <div class="field" style=" height: 100px; margin-bottom: 10px;" >
+            <label asp-for="UserType" class="form-label">Elija el tipo de usuario que desea crear: </label>
+            <select asp-for="UserType" class="form-select">
+                <option value="0">Seleccione una opcion</option>
+                <option value=@Roles.Cliente>Cliente</option>
+                <option value=@Roles.Agente>Agente</option>
+
+            </select>
+        </div>
+       
         <div class="field">
-            <input asp-for="UserName" placeholder="Ingrese su nombre" />
+            <input asp-for="UserName" placeholder="Ingrese su nombre de usuario" />
+        </div>
+        <div class="field">
+            <input asp-for="Email" placeholder="Ingrese su correo electronico" />
         </div>
         <div class="field">
             <input asp-for="Password" placeholder="Ingrese contraseña" />

@@ -15,7 +15,7 @@ namespace Core.Domain.Entities
         public int Rooms { get; set; }
         public int Toilets { get; set; }
         public string Description { get; set; }
-        
+        public string ImageProfile { get; set; }
         public int EstateTypesId { get; set; }
         public int AgentId { get; set; }        
         //public List<int> FeaturesId { get; set; }
