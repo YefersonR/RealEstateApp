@@ -16,7 +16,7 @@ namespace Core.Domain.Entities
         public int Toilets { get; set; }
         public string Description { get; set; }
         public int EstateTypesId { get; set; }
-        public int AgentId { get; set; }        
+        public string AgentId { get; set; }        
         public List<Feature> FeaturesIds { get; set; }
         public int SellTypeId { get; set; }
         public SellType SellTypes { get; set; }
