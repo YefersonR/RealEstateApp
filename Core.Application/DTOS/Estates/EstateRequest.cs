@@ -8,7 +8,7 @@ namespace Core.Application.DTOS.Estates
 {
     public class EstateRequest
     {
-        public string Id { get; set; }
+        public int Id { get; set; } //string
         public string Code { get; set; }
         public double Price { get; set; }
         public double Area { get; set; }

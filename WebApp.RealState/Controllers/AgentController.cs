@@ -57,13 +57,14 @@ namespace WebApp.RealState.Controllers
 
         public async Task<IActionResult> EditEstate(string Code)
         {
-            await Mediator.Send(new GetEstateByCodeQuery() { Code = Code });
+            await Mediator.Send(new GetEstateByCodeQuery() { Code = Code }); //send to edit
             return RedirectToRoute(new { Controller = "Agent", Action = "Estates" });
         }
 
         [HttpPost]
         public async Task<IActionResult> EditEstate(UpdateEstateCommand command)
         {
+            //Arreglar lo de que code sea el ID en Estates
             await Mediator.Send(command);
             return RedirectToRoute(new { Controller = "Agent", Action = "Estates" });
         }
