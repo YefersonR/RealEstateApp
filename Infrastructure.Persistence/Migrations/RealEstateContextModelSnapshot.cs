@@ -26,8 +26,8 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AgentId")
-                        .HasColumnType("int");
+                    b.Property<string>("AgentId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Area")
                         .HasColumnType("float");
@@ -46,9 +46,6 @@ namespace Infrastructure.Persistence.Migrations
 
                     b.Property<int>("EstateTypesId")
                         .HasColumnType("int");
-
-                    b.Property<string>("ImageProfile")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Modified")
                         .HasColumnType("datetime2");

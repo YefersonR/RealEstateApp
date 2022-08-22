@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(RealEstateContext))]
-    [Migration("20220816015859_addingFeatures")]
-    partial class addingFeatures
+    [Migration("20220821225346_init2")]
+    partial class init2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,8 +28,8 @@ namespace Infrastructure.Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("AgentId")
-                        .HasColumnType("int");
+                    b.Property<string>("AgentId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Area")
                         .HasColumnType("float");
