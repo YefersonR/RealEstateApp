@@ -75,5 +75,48 @@ namespace WebApp.RealState.Controllers
             await Mediator.Send(new DeleteFeactureByIdCommand() { Id = Id });
             return RedirectToRoute(new { Controller = "Admin", Action = "SellTypes" });
         }
+
+        public IActionResult Index() { 
+            
+            return View(); 
+        
+        }
+
+        public IActionResult Administradores()
+        {
+
+            return View();
+
+        }
+
+        public IActionResult Desarrolladores()
+        {
+
+            return View();
+
+        }
+
+        public IActionResult Mejoras()
+        {
+
+            return View();
+
+        }
+
+        public IActionResult Propiedades()
+        {
+
+            return View();
+
+        }
+
+        public IActionResult Ventas()
+        {
+
+            return View();
+
+        }
+
+
     }
 }

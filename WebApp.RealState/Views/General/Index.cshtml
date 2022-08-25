@@ -6,8 +6,30 @@
 
         </form>
     </div>
-
-    <table class="table">
+        @foreach(var data in Model){
+    <div class="col-4">
+                    <div class="card shadow-sm">
+                       @* <img class="bd-placeholder-img card-img-top img-Pokemon-size" src="@data.EstatesImgs.FirstOrDefault().ImgUrl"/>*@
+                        <div class="card-body">
+                         <h4 >@data.EstateTypes.Name</h4>
+                            <p class="card-text">Codigo: @data.Code</p>
+                            <p class="card-text">TipoDeVenta: @data.SellTypes.Name</p>
+                            <p class="card-text">Precio: @data.Price</p>
+                            <p class="card-text">Habitaciones: @data.Rooms</p>
+                            <div>
+                             <small class="fw-bold fs-6">Baños: </small>
+                             <small class="fs-6">@data.Toilets</small>
+                             <small class="fw-bold fs-6">Tamaño: </small>
+                             <small class="fs-6">@data.Area</small>
+                             <small class="fw-bold fs-6">Informacion: </small>
+                             <small class="fs-6"><a class="btn btn-outline-dark me-2" asp-controller="General" asp-action="Estate" asp-route-code="@data.Code">Aqui</a></small>
+                             
+                             </div>
+                        </div>
+                    </div>
+                 </div>
+                 }
+    @*<table class="table">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -31,7 +53,7 @@
                 <tr>
                     <th scope="row">@data.Code</th>
                     <td>@data.EstateTypes.Name</td>
-                    <td>@data.EstatesImgs.FirstOrDefault().ImgUrl</td>
+                   @* <td>@data.EstatesImgs.FirstOrDefault().ImgUrl</td>
                     <td>@data.Code</td>c
                     <td>@data.SellTypes.Name</td>
                     <td>@data.Price</td>
@@ -46,5 +68,5 @@
                 </tr>
             }
         </tbody>
-     </table>
+     </table>*@
 </div>

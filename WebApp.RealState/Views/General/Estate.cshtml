@@ -2,21 +2,36 @@
 
 
 <div class="Container">
-    <div>
-        @Model.Area
-        @Model.Code
-        @Model.Description
-        @Model.EstateTypes.Name
-        @Model.Price
-        @Model.Toilets
-        @Model.AgentId
-        @Model.SellTypes.Name
-        @Model.Rooms
-        @foreach(var imgs in  Model.EstatesImgs){
+    <center> 
+    <a class="btn btn-outline-dark me-2" asp-controller="General" asp-action="Index">Volver Atras</a>
+    </center>
+     <div class="col-4">
+                    <div class="card shadow-sm">
+                        <img class="bd-placeholder-img card-img-top img-Pokemon-size" src="  @foreach(var imgs in  Model.EstatesImgs){
             @imgs.ImgUrl
-        }
-        @foreach(var features in  Model.FeaturesRelations){
-            @features.Features.Name
-        }
-    </div>
+        }"/>
+                        <div class="card-body">
+                         <h4 >@Model.EstateTypes.Name</h4>
+                            <p class="card-text">Codigo: @Model.Code</p>
+                            <p class="card-text">TipoDeVenta: @Model.SellTypes.Name</p>
+                            <p class="card-text">Precio: @Model.Price</p>
+                            <p class="card-text">Habitaciones: @Model.Rooms</p>
+                            <div>
+                             <small class="fw-bold fs-6">Baños: </small>
+                             <small class="fs-6">@Model.Toilets</small>
+                             <small class="fw-bold fs-6">Tamaño: </small>
+                             <small class="fs-6">@Model.Area</small>
+                             <small class="fw-bold fs-6">Informacion: </small>
+                             <small class="fs-6">@Model.Description</small>
+                             <small class="fs-6">@foreach(var features in  Model.FeaturesRelations){
+                                                            @features.Features.Name
+                                                            }</small>
+                             </div>
+                        </div>
+                    </div>
+                 </div>
+     <center> 
+    <a class="btn btn-outline-dark me-2" asp-controller="Admin" asp-action="Index">Index</a>
+    </center>
+
 </div>
