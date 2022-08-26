@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Core.Application.DTOS.Estates;
+using Core.Application.Inferfaces.Service;
 using Core.Application.Interface.Repositories;
 using Core.Domain.Entities;
 using MediatR;
@@ -28,10 +29,12 @@ namespace Core.Application.Feactures.Estates.Queries.GetAllEstates
     {
         private readonly IEstatesRepository _estatesRepository;
         private readonly IMapper _mapper;
-        public GetAllEstatesQueryHandler(IEstatesRepository estatesRepository, IMapper mapper)
+        private readonly IUserService _userService;
+        public GetAllEstatesQueryHandler(IEstatesRepository estatesRepository, IMapper mapper, IUserService userService)
         {
             _estatesRepository = estatesRepository;
             _mapper = mapper;
+            _userService = userService;
         }
         public async Task<List<EstateRequest>> Handle(GetAllEstatesQuery request, CancellationToken cancellationToken)
         {
@@ -60,11 +63,6 @@ namespace Core.Application.Feactures.Estates.Queries.GetAllEstates
             {
                 estateList = estateList.Where(x => x.Price <= parameters.MaxPrice).ToList();
             }
-            if (parameters.AgentID != null)
-            {
-                estateList = estateList.Where(x => x.AgentId == parameters.AgentID).ToList();
-            }
-
 
             parameters.MinPrice = parameters.MinPrice == null ? 0 : parameters.MinPrice;
             estateList = estateList.Where(x => x.Price >= parameters.MinPrice).ToList();
@@ -92,7 +90,18 @@ namespace Core.Application.Feactures.Estates.Queries.GetAllEstates
                 }
                 return estateRequests;
             }
-            return _mapper.Map<List<EstateRequest>>(estateList);
+            var estateResponse = _mapper.Map<List<EstateRequest>>(estateList);
+            if (parameters.AgentID != null)
+            {
+                estateResponse = estateResponse.Where(x => x.AgentId == parameters.AgentID).ToList();
+                int i = 0;
+                foreach(var data in estateResponse)
+                {
+                    estateResponse[i].Agente = await _userService.GetAgentById(parameters.AgentID);
+                    i++;
+                }
+            }
+            return estateResponse;
         }
     }
 }

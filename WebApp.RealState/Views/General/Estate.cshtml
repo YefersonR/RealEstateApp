@@ -5,7 +5,7 @@
     <div class="m-4">
         <div class="row">
             
-            <div class="col-8">
+            <div class="col-8" style="margin-bottom: 30px">
                 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
                   <div class="carousel-indicators">
                         @{var i = 0;}
@@ -86,8 +86,25 @@
             </div>
             
             
-            <div class="col-4">
-                Info del agente
+            <div class="col-4 card" style="margin-bottom: 30px">
+                <div>
+                    <div class="text-center">
+                      <h2>Agent</h2>
+                      <h3>Contact Information</h3>
+                      <img class="rounded-4" src=@Model.Agente.ImageProfile style="height: 200px" alt="...">
+                    </div>
+                </div>
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h4>@Model.Agente.Name @Model.Agente.LastName</h4>
+                        <a href="mailto:@Model.Agente.Email" class="h4 m-4">@Model.Agente.Email</a>
+                        <br />
+                        <br />
+                        <a class="btn btn-outline-dark me-2 position-absolute top-100 start-50 translate-middle" asp-controller="Agent" asp-action="Info" asp-route-Id=@Model.AgentId>
+                            More Estates
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

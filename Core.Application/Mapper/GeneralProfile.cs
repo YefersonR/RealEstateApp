@@ -54,6 +54,19 @@ namespace Core.Application.Mapper
                 .ForMember(x => x.Modified, opt => opt.Ignore())
                 .ForMember(x => x.ModifiedBy, opt => opt.Ignore());
 
+            CreateMap<Estate, EstateRequest>()
+                .ReverseMap()
+                .ForMember(x => x.Created, opt => opt.Ignore())
+                .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+                .ForMember(x => x.Modified, opt => opt.Ignore())
+                .ForMember(x => x.ModifiedBy, opt => opt.Ignore());
+
+
+            CreateMap<AgentesViewModel, AuthenticationResponse>()
+                .ReverseMap();
+
+
+
             CreateMap<SellType, SellTypeRequest>()
                 .ReverseMap()
                 .ForMember(x => x.Estates, opt => opt.Ignore())
