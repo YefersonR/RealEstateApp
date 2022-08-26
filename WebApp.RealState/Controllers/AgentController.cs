@@ -31,17 +31,14 @@ namespace WebApp.RealState.Controllers
             _validateUser = validateUser;
             _userService = userService;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(AgentSearchViewModel vm)
         {
-            return View(await _userService.GetAllAgents());
+            return View(await _userService.GetAllAgents(vm));
         }
         public async Task<IActionResult> Info(string Id)
         {
-            AgenteViewModel agent = new();
-            agent.agente = await _userService.GetAgentById(Id);
-            var allEstates = await Mediator.Send(new GetAllEstatesQuery());
-            agent.Estates = allEstates;
-            return View(agent);
+            ViewBag.IsLoggin = _validateUser.HasUser();
+            return View(await Mediator.Send(new GetAllEstatesQuery() { AgentID = Id}));
         }
 
         public async Task<IActionResult> Estates(string AgentId)

@@ -57,7 +57,7 @@ namespace Core.Application.Services
             ResetPasswordRequest resetRequest = _mapper.Map<ResetPasswordRequest>(request);
             return await _accountService.ResetPassword(resetRequest);
         }
-        public async Task<List<AgentesViewModel>> GetAllAgents()
+        public async Task<List<AgentesViewModel>> GetAllAgents(AgentSearchViewModel vm)
         {
             var agentes  = _accountService.GetAllAgents();
             var listAgents = agentes.Select(agentes => new AgentesViewModel
@@ -65,19 +65,20 @@ namespace Core.Application.Services
                 Name = agentes.Name,
                 LastName = agentes.LastName,
                 ImageProfile = agentes.ImageProfile,
+                Email = agentes.Email,
+                Id = agentes.Id
 
             }).ToList();
+            if (vm.AgentName != null)
+            {
+                listAgents = listAgents.Where(agent => (agent.Name +" " + agent.LastName).ToLower().Contains((vm.AgentName).ToLower())).ToList();
+            }
             return listAgents;
         }
         public async Task<AgentesViewModel> GetAgentById(string Id)
         {
             var agente = await _accountService.GetAgentById(Id);
-            var agent = new AgentesViewModel();
-            agent.Name = agente.Name;
-            agent.LastName = agente.LastName;
-            agent.ImageProfile = agente.ImageProfile;
-
-            return agent;
+            return _mapper.Map<AgentesViewModel>(agente);
         }
     }
 }
