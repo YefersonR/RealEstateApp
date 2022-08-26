@@ -2,12 +2,18 @@
 using Core.Application.DTOS.Email;
 using Core.Application.Enum;
 using Core.Application.Inferfaces.Service;
+using Core.Domain.Settings;
 using Infrastructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,12 +24,14 @@ namespace Infrastructure.Identity.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailService _emailService;
+        private readonly JWTSettings _jWTSettings;
 
-        public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IEmailService emailService)
+        public AccountService(UserManager<ApplicationUser> userManager,IOptions<JWTSettings> options, SignInManager<ApplicationUser> signInManager, IEmailService emailService)
         {
             _signInManager = signInManager;
             _emailService = emailService;
             _userManager = userManager;
+            _jWTSettings = options.Value;
         }
         public async Task<AuthenticationResponse> Authentication(AuthenticationRequest request)
         {
@@ -48,6 +56,7 @@ namespace Infrastructure.Identity.Services
                 response.Error = $"Account not confirm for {request.UserName}";
                 return response;
             }
+            JwtSecurityToken jwtSecurityToken = await GenerateJWToken(User);
 
             response.Id = User.Id;
             response.Name = User.Name;
@@ -57,6 +66,9 @@ namespace Infrastructure.Identity.Services
             response.ImageProfile = User.ImageProfile;
             var roles = await _userManager.GetRolesAsync(User).ConfigureAwait(false);
             response.Roles = roles.ToList();
+            response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+            var refreshToken = GenerateRefreshToken();
+            response.RefreshToken = refreshToken.Token;
 
             return response;
         }
@@ -278,6 +290,7 @@ namespace Infrastructure.Identity.Services
             
             return agent;
         }
+        
         //public async Task ChangeUserState(string id)
         //{
         //    var user = await _userManager.FindByIdAsync(id);
@@ -311,5 +324,58 @@ namespace Infrastructure.Identity.Services
         //        SavingsAccount = data.SavingAccount
         //    };
         //}
+        private async Task<JwtSecurityToken> GenerateJWToken(ApplicationUser user)
+        {
+            var userClaims = await _userManager.GetClaimsAsync(user);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var rolesClaims = new List<Claim>();
+            foreach (var role in roles)
+            {
+                rolesClaims.Add(new Claim("roles", role));
+            }
+            var claims = new[]
+            {
+                    new Claim(JwtRegisteredClaimNames.Sub,user.UserName),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(JwtRegisteredClaimNames.Email,user.Email),
+                    new Claim("uid",user.Id),
+
+                }
+            .Union(userClaims)
+            .Union(rolesClaims);
+
+            var symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jWTSettings.Key));
+            var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+
+            var jwtSecurityToken = new JwtSecurityToken(
+                issuer: _jWTSettings.Issuer,
+                audience: _jWTSettings.Audience,
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(_jWTSettings.DurationInMinutes),
+                signingCredentials: signingCredentials);
+
+            return jwtSecurityToken;
+        }
+        private RefreshToken GenerateRefreshToken()
+        {
+            return new RefreshToken
+            {
+                Token = RandomTokenString(),
+                Expires = DateTime.UtcNow.AddDays(7),
+                Created = DateTime.UtcNow,
+            };
+        }
+         private string RandomTokenString()
+        {
+            using(var rngCryptoServiceProvider = new RNGCryptoServiceProvider())
+            {
+                var randomBytes = new byte[40];
+                rngCryptoServiceProvider.GetBytes(randomBytes);
+                return BitConverter.ToString(randomBytes).Replace("-","");
+            }
+
+        }
+
     }
 }
