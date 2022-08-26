@@ -20,5 +20,10 @@ namespace WebApp.RealState.Middleware
             AuthenticationResponse user = _httpContext.HttpContext.Session.Get<AuthenticationResponse>("user");
             return user == null ? false : true;
         }
+        public string GetUserID()
+        {
+            AuthenticationResponse user = _httpContext.HttpContext.Session.Get<AuthenticationResponse>("user");
+            return user.Id;
+        }
     }
 }

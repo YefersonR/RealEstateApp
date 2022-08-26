@@ -252,7 +252,7 @@ namespace Infrastructure.Identity.Services
 
         public List<AuthenticationResponse> GetAllAgents()
         {
-            var users = _userManager.GetUsersInRoleAsync(Roles.Cliente.ToString()).Result.ToList();
+            var users = _userManager.GetUsersInRoleAsync(Roles.Agente.ToString()).Result.ToList();
             var allAgents = users.Select(user => new AuthenticationResponse
             {
                 Id = user.Id,

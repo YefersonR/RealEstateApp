@@ -57,7 +57,7 @@ namespace Core.Application.Services
             ResetPasswordRequest resetRequest = _mapper.Map<ResetPasswordRequest>(request);
             return await _accountService.ResetPassword(resetRequest);
         }
-        public List<AgentesViewModel> GetAllAgents()
+        public async Task<List<AgentesViewModel>> GetAllAgents()
         {
             var agentes  = _accountService.GetAllAgents();
             var listAgents = agentes.Select(agentes => new AgentesViewModel
