@@ -61,7 +61,7 @@ namespace Infrastructure.Persistence.Context
 
             modelBuilder.Entity<Estate>().HasMany<EstatesImg>(x => x.EstatesImgs).WithOne(x => x.Estates).HasForeignKey(x => x.EstatesId)
                 .OnDelete(DeleteBehavior.Cascade);
-
+            
             modelBuilder.Entity<EstateType>().HasMany<Estate>(x => x.Estates).WithOne(x => x.EstateTypes).HasForeignKey(x => x.EstateTypesId)
                 .OnDelete(DeleteBehavior.Cascade);
 

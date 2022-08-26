@@ -30,7 +30,7 @@ namespace Core.Application.Feactures.Favorites.Queries.GetFavoritesById
 
         public async Task<List<FavoriteRequest>> Handle(GetFavoritesByIdQuery request, CancellationToken cancellationToken)
         {
-            var FavoritesList = await _favoritesRepository.GetAllAsync();
+            var FavoritesList = await _favoritesRepository.GetAllWhitIncludes(new List<string> { "Estates" });
             List<FavoriteRequest> response = new();
             FavoritesList = FavoritesList.Where(x => x.UserId == request.UserId).ToList();
             var EstateList = await _estatesRepository.GetAllWhitIncludes(new List<string> { "SellTypes", "EstateTypes", "EstatesImgs" });

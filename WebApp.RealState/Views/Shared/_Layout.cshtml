@@ -7,72 +7,91 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebApp.RealState</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    @RenderSection("Styles", false)
-    <link href="~/css/site.css" rel="stylesheet" />
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - RealEstate</title>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        @RenderSection("Styles", false)
+        <link href="~/css/site.css" rel="stylesheet" />
 
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    </head>
+    <body>
+        <header class="p-3 bg-dark text-white">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="General" asp-action="Index">RealState</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <div>
-                        @if (user != null)
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    @if (user != null && user.Roles.IndexOf("Administrador") >= 0)
+                    {
+                        <a asp-area="" asp-controller="Admin" asp-action="Index" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                            RealState
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
+                                <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"/>
+                            </svg>
+                        </a>                    
+                    }
+                    @if (user == null || (user != null && user.Roles.IndexOf("Administrador") < 0))
+                    {
+                        <a asp-area="" asp-controller="General" asp-action="Index" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                            RealState
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
+                                <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"/>
+                            </svg>
+                        </a>                    
+                    }
+
+
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    </ul>
+
+                    <div class="text-end">
+                        @if (user == null)
                         {
-                                <ul class="navbar-nav flex-grow-1">
-                                    <li class="nav-item d-flex">
-                                        <a class="nav-link text-white">@user.UserName</a>
-                                        <img src="@user.ImageProfile" style="width:50px;height:50px;border-radius:50%; " />
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="LogOut">LogOut</a>
-                                    </li>
-                                </ul>
-                           
+                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="Index">Agent</a>
+                                <a  class="btn btn-outline-warning me-2" asp-area="" asp-controller="Account" asp-action="Index">Login</a>
+                                <a  class="btn btn-outline-danger me-2" asp-area="" asp-controller="Account" asp-action="Register">Join Us</a>
                         }
-                        else
+                        @if(user != null)
                         {
-                            <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Agent" asp-action="Index">Agentes</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Register">Unete a la app</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">Iniciar sesion</a>
-                                </li>
-                            </ul>
+                            @if (user.Roles.IndexOf("Cliente") >= 0)
+                            {
+                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="Index">Agent</a>
+                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Client" asp-action="Favorites">Favorites</a>
+                            }
+                            @if (user.Roles.IndexOf("Agente") >= 0)
+                            {
+                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="Estates">Estates</a>
+                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="Index">My profile</a>
+                            }
+                            @if (user.Roles.IndexOf("Administrador") >= 0)
+                            {
+                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="Index">Administratos</a>
+                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="Index">Agents</a>
+                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="Index">SellTypes</a>
+                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="Index">EstatesTypes</a>
+                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="Index">Features</a>
+                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="Index">Estates</a>
+                            }
+                            <a class="btn btn-outline-warning me-2" asp-area="" asp-controller="Account" asp-action="LogOut">LogOut</a>
                         }
-                   </div>
+                    </div>
+
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
+        </header>
         <div class="container">
-            &copy; 2022 - WebApp.RealState - <a asp-area="" asp-controller="General" asp-action="Privacy">Privacy</a>
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
+
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; @DateTime.Now.Year - WebApp.RealState 
+            </div>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
 </html>

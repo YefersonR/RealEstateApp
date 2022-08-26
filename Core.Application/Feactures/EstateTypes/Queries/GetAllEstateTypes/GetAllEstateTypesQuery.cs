@@ -23,9 +23,10 @@ namespace Core.Application.Feactures.EstateTypes.Queries.GetAllEstateTypes
             _estateTypesRepository = estateTypesRepository;
             _mapper = mapper;
         }
-        public Task<List<EstateTypeRequest>> Handle(GetAllEstateTypesQuery request, CancellationToken cancellationToken)
+        public async Task<List<EstateTypeRequest>> Handle(GetAllEstateTypesQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var response = await _estateTypesRepository.GetAllAsync();
+            return _mapper.Map<List<EstateTypeRequest>>(response);
         }
     }
 

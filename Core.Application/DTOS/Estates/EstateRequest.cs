@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Application.ViewModels.User;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Core.Application.DTOS.Estates
 {
     public class EstateRequest
     {
-        public string Id { get; set; }
+        public int Id { get; set; } //string
         public string Code { get; set; }
         public double Price { get; set; }
         public double Area { get; set; }
@@ -16,9 +17,11 @@ namespace Core.Application.DTOS.Estates
         public int Toilets { get; set; }
         public string Description { get; set; }
         public int AgentId { get; set; }
+        public int FavoriteId { get; set; }
         public SellTypeRequest SellTypes { get; set; }
         public List<EstateImgRequest> EstatesImgs { get; set; }
         public List<FeaturesRelationsRequest> FeaturesRelations { get; set; }
         public EstateTypeRequest EstateTypes { get; set; }
+        public AgentesViewModel Agente { get; set; }
     }
 }

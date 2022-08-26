@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Core.Application.DTOS.Estates;
+using Core.Application.Inferfaces.Service;
 using Core.Application.Interface.Repositories;
 using MediatR;
 using System;
@@ -20,10 +21,12 @@ namespace Core.Application.Feactures.Estates.Queries.GetEstateByCode
         private readonly IEstatesRepository _estatesRepository;
         private readonly IFeaturesRepository _featuresRepository;
         private readonly IMapper _mapper;
-        public GetEstateByIdQueryHandler(IEstatesRepository estatesRepository, IFeaturesRepository featuresRepository, IMapper mapper)
+        private readonly IUserService _userService;
+        public GetEstateByIdQueryHandler(IEstatesRepository estatesRepository, IFeaturesRepository featuresRepository, IMapper mapper, IUserService userService)
         {
             _featuresRepository = featuresRepository;
             _estatesRepository = estatesRepository;
+            _userService = userService;
             _mapper = mapper;
         }
         public async Task<EstateRequest> Handle(GetEstateByCodeQuery request, CancellationToken cancellationToken)
@@ -37,6 +40,7 @@ namespace Core.Application.Feactures.Estates.Queries.GetEstateByCode
             var estate = estateList.Where(x => x.Code == Code).FirstOrDefault();
             var estateRequest = _mapper.Map<EstateRequest>(estate);
             estateRequest.FeaturesRelations.ForEach(x => x.Features = _mapper.Map<FeaturesRequest>(_featuresRepository.GetByIdAsync(x.FeatureId).Result));
+            estateRequest.Agente = await _userService.GetAgentById(estate.AgentId);
             return estateRequest;
         }
     }
