@@ -3,30 +3,26 @@
 
 
 <div class="Container">
-    <div>
-        <form asp-controller="General" asp-action="Index">
+    <div class="m-4">
+        <form method="post" asp-controller="Agent" asp-action="Index">
+            <div class="input-group">
+                <input type="text"  name="AgentName" class="form-control" placeholder="John Doe">
+                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+            </div>
         </form>
     </div>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Img</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (AgentesViewModel data in Model)
-            {
-                <tr>
-                    <th scope="row">@data.Name</th>
-                    <td>@data.LastName</td>
-                    <td>@data.ImageProfile</td>
-         
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="row align-items-start m-4">
+        @foreach(var agents in Model){
+            <div class="col text-center">
+                <div class="card" style="width: 18rem;">
+                    <img src="@agents.ImageProfile" style="height: 200px" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">@agents.Name @agents.LastName</h5>
+                        <p class="card-text">@agents.Email</p>
+                        <a asp-controller="Agent" asp-action="Info" asp-route-Id=@agents.Id class="btn btn-primary">Estates</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>

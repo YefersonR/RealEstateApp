@@ -272,7 +272,7 @@ namespace Infrastructure.Identity.Services
                 LastName = user.LastName,
                 UserName = user.UserName,
                 ImageProfile = user.ImageProfile,
-
+                IsVerified = user.EmailConfirmed
             }).ToList();
             return allAgents;
         } 
@@ -280,13 +280,13 @@ namespace Infrastructure.Identity.Services
         {
             var user = await _userManager.FindByIdAsync(Id);
             var agent = new AuthenticationResponse();
-
-
             agent.Id = user.Id;
             agent.Name = user.Name;
             agent.LastName = user.LastName;
             agent.UserName = user.UserName;
             agent.ImageProfile = user.ImageProfile;
+            agent.Email = user.Email;
+            agent.IsVerified = user.EmailConfirmed;
             
             return agent;
         }
