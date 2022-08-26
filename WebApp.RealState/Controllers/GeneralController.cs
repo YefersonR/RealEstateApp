@@ -1,6 +1,7 @@
 ﻿using Core.Application.DTOS.Account;
 using Core.Application.Feactures.Estates.Queries.GetAllEstates;
 using Core.Application.Feactures.Estates.Queries.GetEstateByCode;
+using Core.Application.Feactures.EstateTypes.Queries.GetAllEstateTypes;
 using Core.Application.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -26,6 +27,7 @@ namespace WebApp.RealState.Controllers
         public async Task<IActionResult> Index(GetAllEstatesParameters parameters)
         {
             ViewBag.IsLoggin = true; //
+            ViewBag.EstateTypes = await Mediator.Send(new GetAllEstateTypesQuery());
             return View(await Mediator.Send(new GetAllEstatesQuery() 
                         { MaxPrice = parameters.MaxPrice, MinPrice = parameters.MinPrice, Rooms = parameters.Rooms, Toilets = parameters.Toilets, SellTypeId = parameters.SellTypeId }));
         }
