@@ -55,6 +55,7 @@
                             @if (user.Roles.IndexOf("Cliente") >= 0)
                             {
                                 <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="Index">Agent</a>
+                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Client" asp-action="Favorites">Favorites</a>
                             }
                             @if (user.Roles.IndexOf("Agente") >= 0)
                             {

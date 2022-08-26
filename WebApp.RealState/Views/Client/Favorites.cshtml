@@ -1,38 +1,32 @@
-﻿@model List<Core.Application.DTOS.Estates.FavoriteRequest>
+﻿@model List<Core.Application.DTOS.Estates.EstateRequest>
 
-<div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">TipoDePropiedad</th>
-                <th scope="col">ImagenDeLaPropiedad</th>
-                <th scope="col">CodigoDeLaPropiedad</th>
-                <th scope="col">TipoDeVenta</th>
-                <th scope="col">ValorDeLaPropiedad</th>
-                <th scope="col">CantidadDeHabitaciones</th>
-                <th scope="col">CantidadDeBaños</th>
-                <th scope="col">Tamaño</th>
-                <th scope="col">Info</th>
-                <th scope="col">DellToFav</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(var data in Model){
-                <tr>
-                    <th scope="row">@data.Estates.Code</th>
-                    <td>@data.Estates.EstateTypes.Name</td>
-                    <td>@data.Estates.EstatesImgs.FirstOrDefault().ImgUrl</td>
-                    <td>@data.Estates.Code</td>c
-                    <td>@data.Estates.SellTypes.Name</td>
-                    <td>@data.Estates.Price</td>
-                    <td>@data.Estates.Rooms</td>
-                    <td>@data.Estates.Toilets</td>
-                    <td>@data.Estates.Area</td>
-                    <td><a class="btn" asp-controller="General" asp-action="Estate" asp-route-code="@data.Estates.Code"> Info </a></td>
-                    <td><a class="btn" asp-controller="Client" asp-action="DellFavorite" asp-route-FavId="@data.Id"> Delete </a></td>
-                </tr>
-            }
-        </tbody>
-     </table>
+
+<div class="Container">
+
+    <div class="row align-items-start">
+        @foreach(var data in Model){
+            <div class="col-4" style="margin-bottom: 15px; margin-top: 30px">
+                <div class="card shadow-sm" asp-controller="General" asp-action="Estate" asp-route-code="@data.Code">
+                    <img class="bd-placeholder-img card-img-top img-Pokemon-size" style="height: 250px" src="@data.EstatesImgs.FirstOrDefault().ImgUrl"/>
+                    <div class="card-body">
+                        <h2>@data.EstateTypes.Name</h2>
+                        <p class="card-text h5">Sell type: @data.SellTypes.Name</p>
+                        <p class="card-text h5">Price: @data.Price</p>
+                        <p class="card-text h5">Rooms: @data.Rooms</p>
+                        <div>
+                            <small class="fw-bold fs-6">Toilets: </small>
+                            <small class="fs-6">@data.Toilets</small>
+                            <small class="fw-bold fs-6">Tamaño: </small>
+                            <small class="fs-6">@data.Area</small>
+                        </div>
+                        <a class="btn btn-outline-success position-absolute bottom-0 end-0" asp-controller="Client" asp-action="DellFavorite" asp-route-FavId=@data.FavoriteId asp-route-Route="Fav"> DellFav</a>
+                        <a class="btn btn-outline-dark me-2 position-absolute top-100 start-50 translate-middle" asp-controller="General" asp-action="Estate" asp-route-code="@data.Code">
+                            More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>
+

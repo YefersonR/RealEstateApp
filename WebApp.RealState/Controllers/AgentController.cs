@@ -14,6 +14,7 @@ using Core.Application.Feactures.Estates.Commands.UpdateEstates;
 using Core.Application.Feactures.Estates.Commands.DeleteEstateById;
 using Core.Application.Feactures.SellTypes.Queries.GetAllSellTypes;
 using Core.Application.Feactures.EstateTypes.Queries.GetAllEstateTypes;
+using WebApp.RealState.Middleware;
 
 namespace WebApp.RealState.Controllers
 {
@@ -23,14 +24,16 @@ namespace WebApp.RealState.Controllers
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
 
         private readonly IUserService _userService;
-        public AgentController(IUserService userService)
+        private readonly ValidateUser _validateUser;
+        
+        public AgentController(IUserService userService, ValidateUser validateUser)
         {
+            _validateUser = validateUser;
             _userService = userService;
         }
-        /*public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<AgentesViewModel> agents = _userService.GetAllAgents();
-            return View(agents);
+            return View(await _userService.GetAllAgents());
         }
         public async Task<IActionResult> Info(string Id)
         {
@@ -39,18 +42,19 @@ namespace WebApp.RealState.Controllers
             var allEstates = await Mediator.Send(new GetAllEstatesQuery());
             agent.Estates = allEstates;
             return View(agent);
-        }*/
+        }
 
         public async Task<IActionResult> Estates(string AgentId)
         {
             ViewBag.SellTypes = await Mediator.Send(new GetAllSellTypesQuery());
-            ViewBag.SellTypes = await Mediator.Send(new GetAllEstateTypesQuery());
+            //ViewBag.SellTypes = await Mediator.Send(new GetAllEstateTypesQuery());
             return View(await Mediator.Send(new GetAllEstatesByAgentIdQuery() { AgentId = AgentId }));
         }
 
         [HttpPost]
         public async Task<IActionResult> Estates(CreateEstateCommand command)
         {
+            command.AgentId = _validateUser.GetUserID();
             command.Code = Guid.NewGuid().ToString(); //.Substring(command)
             return View(await Mediator.Send(command));
         }

@@ -21,7 +21,7 @@ namespace Core.Application.Feactures.Estates.Commands.CreateEstates
         public string Description { get; set; }
         public string ImageProfile { get; set; }
         public int EstateTypesId { get; set; }
-        public int AgentId { get; set; }
+        public string AgentId { get; set; }
         public int SellTypeId { get; set; }
     }
     public class CreateEstateCommandHandler : IRequestHandler<CreateEstateCommand, string>

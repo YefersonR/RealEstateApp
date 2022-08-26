@@ -48,6 +48,14 @@
                             <small class="fw-bold fs-6">Tamaño: </small>
                             <small class="fs-6">@data.Area</small>
                         </div>
+                        @if(ViewBag.IsLoggin){
+                            @if(data.FavoriteId != null && data.FavoriteId != 0){
+                                <a class="btn btn-outline-success position-absolute bottom-0 end-0" asp-controller="Client" asp-action="DellFavorite" asp-route-FavId=@data.FavoriteId> DellFav</a>
+                            }
+                            @if(data.FavoriteId == null || data.FavoriteId == 0){
+                                <a class="btn btn-outline-success position-absolute bottom-0 end-0" asp-controller="Client" asp-action="AddFav" asp-route-EstateId=@data.Id> AddFav</a>
+                            }
+                        }
                         <a class="btn btn-outline-dark me-2 position-absolute top-100 start-50 translate-middle" asp-controller="General" asp-action="Estate" asp-route-code="@data.Code">
                             More
                         </a>
