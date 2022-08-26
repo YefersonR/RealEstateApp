@@ -25,7 +25,6 @@ namespace WebApp.RealState.Controllers
         }
         public async Task<IActionResult> Index(GetAllEstatesParameters parameters)
         {
-            ViewBag.IsLoggin = true; //
             return View(await Mediator.Send(new GetAllEstatesQuery() 
                         { MaxPrice = parameters.MaxPrice, MinPrice = parameters.MinPrice, Rooms = parameters.Rooms, Toilets = parameters.Toilets, SellTypeId = parameters.SellTypeId }));
         }
