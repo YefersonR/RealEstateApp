@@ -11,6 +11,6 @@ namespace Core.Application.Interface.Repositories
     public interface IEstatesRepository : IGenericRepository<Estate>
     {
         Task<Estate> GetByCodeAsync(string Code);
-        Task Update(Estate entity, string Code);
+        Task Update(Estate entity, int Id);
     }
 }
