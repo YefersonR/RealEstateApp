@@ -1,0 +1,39 @@
+﻿@model List<Core.Application.DTOS.Estates.EstateRequest>
+
+
+<div class="Container">
+    <br />
+    <a class="btn btn-outline-success offset-10" asp-controller="Client" asp-action="Estates"> Create One</a>
+    <div class="row align-items-start">
+        @foreach(var data in Model){
+            <div class="col-4" style="margin-bottom: 15px; margin-top: 30px">
+                <div class="card shadow-sm" asp-controller="General" asp-action="Estate" asp-route-code="@data.Code">
+                    <img class="bd-placeholder-img card-img-top img-Pokemon-size" style="height: 250px" src="@data.EstatesImgs.FirstOrDefault().ImgUrl"/>
+                    <div class="card-body">
+                        <h2>@data.EstateTypes.Name</h2>
+                        <p class="card-text h5">Sell type: @data.SellTypes.Name</p>
+                        <p class="card-text h5">Price: @data.Price</p>
+                        <p class="card-text h5">Rooms: @data.Rooms</p>
+                        <div>
+                            <small class="fw-bold fs-6">Toilets: </small>
+                            <small class="fs-6">@data.Toilets</small>
+                            <small class="fw-bold fs-6">Tamaño: </small>
+                            <small class="fs-6">@data.Area</small>
+                        </div>
+                        <a class="btn btn-outline-success" asp-controller="Agent" asp-action="EditEstate" asp-route-Id=@data.Id> Edit</a>
+                        <a class="btn btn-outline-success" asp-controller="Agent" asp-action="DeleteEstate" asp-route-Id=@data.Id> Delete</a>
+                        
+                        <a class="btn btn-outline-dark me-2 position-absolute top-100 start-50 translate-middle" asp-controller="General" asp-action="Estate" asp-route-code="@data.Code">
+                            More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />

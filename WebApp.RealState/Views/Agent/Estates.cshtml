@@ -1,5 +1,100 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@section Styles{
+    <link href="~/css/User.css" rel="stylesheet" />
 }
+
+<iv class="loginContainer m-4">
+    <div class="formLogin">
+        <header>
+            Estates
+        </header>
+    <form method="post" enctype="multipart/form-data" asp-controller="Agent" asp-action="Estates">
+        <div class="field">
+            <input name="Description" placeholder="Description" />
+        </div>
+        <div class="field">
+            <input name="Price" type="number" step="any" placeholder="Price" />
+        </div>
+        <div class="field">
+            <input name="Area" type="number" step="any" placeholder="Area" />
+        </div>
+        <div class="field">
+            <input name="Rooms" type="number" placeholder="Rooms" />
+        </div>
+        <div class="field">
+            <input name="Toilets" type="number" placeholder="Toilets" />
+        </div>
+        <div class="field">
+            <label>EstateType</label>
+            <select name="EstateTypesId" class="form-select" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+                @foreach(var EstateTypes in ViewBag.EstateTypes)
+                {
+                    <option value=@EstateTypes.Id>@EstateTypes.Name</option>
+                }
+            </select>
+        </div>
+        <div class="field">
+            <label>SellType</label>
+            <select name="SellTypeId" class="form-select" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+                @foreach(var SellType in ViewBag.SellTypes)
+                {
+                    <option value=@SellType.Id>@SellType.Name</option>
+                }
+            </select>
+        </div>
+        <div class="field img" style=" height: 70px; margin-bottom: 10px;">
+            <label>Estate Image</label>
+            <input name="ImageEstate" type="file" multiple/>
+        </div>
+
+        <div class="field">
+            <label>Features</label>
+            <select class="form-select" name="Features" multiple size="3" aria-label="multiple select example">
+                @foreach(var Features in ViewBag.Features)
+                {
+                    <option value=@Features.Id>@Features.Name</option>
+                }
+            </select>
+        </div>
+            <!--<div>
+                <a id="getFeatureBTN" class="btn btn-primary">Add Feature</a>
+            </div>
+        </div>
+            <br />
+        <div class="field" id="feutureListHtml">
+            <a name="Features">a</a>
+        </div>-->
+        <br />
+        <div class="buttons">
+            <button>Create</button>
+        </div>
+    </form>
+</div>
+<script>
+    /*let featuresGettings = [];
+    var feature = document.getElementById("featuresSel");
+    document.getElementById("getFeatureBTN").addEventListener('click', function() {
+        var value = feature.value;
+        var text = feature.options[feature.selectedIndex].text;
+        featuresGettings.push([value, text]);
+        featureListUpdates();
+    });
+
+    function featureListUpdates(){
+        var Alllist = [];
+        var data = document.getElementById("feutureListHtml")
+        for(var i=0; i<featuresGettings.length; i++) {
+            for(var j=0; j<1; j++) {
+                var first = featuresGettings[i][j];
+                var secnd = featuresGettings[i][j+1];
+                Alllist.push(`<a name='Features'value=${first}>${secnd}</a>`)
+            }
+        }
+        let txt = Alllist.toString().replace(",", "");
+        data.innerHTML = txt;
+    }*/
+
+
+
+</script>

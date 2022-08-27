@@ -10,6 +10,7 @@ namespace Core.Application.ViewModels.User
 {
     public class UserSaveViewModel
     {
+        public string Id { get; set; }
         [Required(ErrorMessage = "Debe colocar el nombre")]
         [DataType(DataType.Text)]
         public string Name { get; set; }

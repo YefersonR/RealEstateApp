@@ -69,7 +69,7 @@ namespace Infrastructure.Persistence.Context
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Estate>().HasMany<FeaturesRelations>(x => x.FeaturesRelations).WithOne(x => x.Estates).HasForeignKey(x => x.EstateId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<SellType>().HasMany<Estate>(x => x.Estates).WithOne(x => x.SellTypes).HasForeignKey(x => x.SellTypeId)
                 .OnDelete(DeleteBehavior.NoAction);
