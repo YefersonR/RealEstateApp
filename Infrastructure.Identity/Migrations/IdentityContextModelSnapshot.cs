@@ -42,6 +42,9 @@ namespace Infrastructure.Identity.Migrations
                     b.Property<string>("ImageProfile")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 

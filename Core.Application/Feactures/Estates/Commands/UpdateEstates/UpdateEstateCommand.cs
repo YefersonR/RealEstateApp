@@ -38,6 +38,7 @@ namespace Core.Application.Feactures.Estates.Commands.UpdateEstates
         public int AgentId { get; set; }
         [SwaggerParameter(Description = "Id del tipo de venta que tiene la propiedad")]
         public int SellTypeId { get; set; }
+        public int EstateTypeId { get; set; }
     }
     public class UpdateEstateCommanHandler : IRequestHandler<UpdateEstateCommand, UpdateEstateCommandResponse>
     {
@@ -51,15 +52,43 @@ namespace Core.Application.Feactures.Estates.Commands.UpdateEstates
         }
         public async Task<UpdateEstateCommandResponse> Handle(UpdateEstateCommand request, CancellationToken cancellationToken)
         {
-            var estate = await _estatesRepository.GetByCodeAsync(request.Code);
-
+            var estateList = await _estatesRepository.GetAllWhitIncludes(new List<string> { "SellTypes", "EstateTypes", "EstatesImgs", "Favorites" });
+            var estate = estateList.Where(x => x.Code == request.Code).FirstOrDefault();
             if (estate == null) throw new Exception("Estate not found");
+            if(request.Toilets != null)
+            {
+                estate.Toilets = request.Toilets;
+            }
+            if (request.Rooms != null)
+            {
+                estate.Rooms = request.Rooms;
+            }
+            if (request.Price != null)
+            {
+                estate.Price = request.Price;
+            }
+            if (request.EstateTypeId != null)
+            {
+                estate.EstateTypesId = request.EstateTypeId;
+            }
+            if (request.Area != null)
+            {
+                estate.Area = request.Area;
+            }
+            if (request.Description != null)
+            {
+                estate.Description = request.Description;
+            }
+            if (request.SellTypeId != null)
+            {
+                estate.SellTypeId = request.SellTypeId;
+            }
+            estate.EstateTypesId = estate.EstateTypes.Id;
+            estate.SellTypeId = estate.SellTypes.Id;
+            await _estatesRepository.Update(estate,estate.Id);
 
-            estate = _mapper.Map<Estate>(request);
-
-            await _estatesRepository.Update(estate,estate.Code);
-
-            var updateState = _mapper.Map<UpdateEstateCommandResponse>(request); 
+            var updateState = _mapper.Map<UpdateEstateCommandResponse>(request);
+            updateState.Id = estate.Id;
             return updateState;
         }
 

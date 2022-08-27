@@ -13,6 +13,7 @@ using Core.Application.Feactures.EstateTypes.Queries.GetAllEstateTypes;
 using Core.Application.Feactures.Favorites.Commands.CreateFavorite;
 using Core.Application.Feactures.Favorites.Queries.GetFavoritesById;
 using Core.Application.Feactures.Feactures.Commands.CreateFeacture;
+using Core.Application.Feactures.Feactures.Commands.CreateFeaturesEstates;
 using Core.Application.Feactures.Feactures.Commands.UpdateFeacture;
 using Core.Application.Feactures.Feactures.Queries.GetAllFeactures;
 using Core.Application.Feactures.SellTypes.Commands.CreateSellType;
@@ -28,10 +29,34 @@ namespace Core.Application.Mapper
     public class GeneralProfile : Profile
     {
         public GeneralProfile()
-        {   
+        {
             #region Estate Feactures
             CreateMap<GetAllEstatesQuery, GetAllEstatesParameters>()
                 .ReverseMap();
+
+            CreateMap<EstatesImg, CreateEstateImgCommand>()
+                .ReverseMap()
+                .ForMember(x => x.Created, opt => opt.Ignore())
+                .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+                .ForMember(x => x.Modified, opt => opt.Ignore())
+                .ForMember(x => x.ModifiedBy, opt => opt.Ignore());
+
+            CreateMap<Estate, UpdateEstateCommand>()
+                .ReverseMap()
+                .ForMember(x => x.Created, opt => opt.Ignore())
+                .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+                .ForMember(x => x.Modified, opt => opt.Ignore())
+                .ForMember(x => x.ModifiedBy, opt => opt.Ignore())
+                .ForMember(x => x.FeaturesIds, opt => opt.Ignore());
+
+
+            CreateMap<FeaturesRelations, CreateFeaturesEstatesCommand>()
+                .ReverseMap()
+                .ForMember(x => x.Created, opt => opt.Ignore())
+                .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+                .ForMember(x => x.Modified, opt => opt.Ignore())
+                .ForMember(x => x.ModifiedBy, opt => opt.Ignore());
+
 
             CreateMap<Estate, EstateRequest>()
                 .ReverseMap()
@@ -206,6 +231,9 @@ namespace Core.Application.Mapper
               .ForMember(x => x.HasError, opt => opt.Ignore())
               .ForMember(x => x.Error, opt => opt.Ignore())
               .ReverseMap();
+
+            CreateMap<UserSaveViewModel, AgentesViewModel>()
+               .ReverseMap();
             #endregion
         }
     }

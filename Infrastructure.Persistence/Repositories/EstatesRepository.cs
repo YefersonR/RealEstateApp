@@ -22,9 +22,9 @@ namespace Infrastructure.Persistence.Repositories
             return await _dbContext.Set<Estate>().FindAsync(Code);
         }
 
-        public async Task Update(Estate entity, string Code)
+        public async Task Update(Estate entity, int Id)
         {
-            Estate entry = await _dbContext.Set<Estate>().FindAsync(Code);
+            Estate entry = await _dbContext.Set<Estate>().FindAsync(Id);
             _dbContext.Entry(entry).CurrentValues.SetValues(entity);
             await _dbContext.SaveChangesAsync();
         }

@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Feactures\FeaturesEstates\Queries\" />
     <Folder Include="Mapper\" />
   </ItemGroup>
 

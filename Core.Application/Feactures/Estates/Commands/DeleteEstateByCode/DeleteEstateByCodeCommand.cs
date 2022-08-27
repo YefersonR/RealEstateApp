@@ -17,27 +17,28 @@ namespace Core.Application.Feactures.Estates.Commands.DeleteEstateById
     /// </summary>
     public class DeleteEstateByCodeCommand : IRequest<string>
     {
-        public string Code { get; set; }
+        public int Id { get; set; }
     }
-    public class DeleteEstateByCodeCommandHandler : IRequestHandler<DeleteEstateByCodeCommand, string>
+    public class DeleteEstateByCodeCommandHandler : IRequestHandler<DeleteEstateByCodeCommand, int>
     {
         private readonly IEstatesRepository _estatesRepository;
         private readonly IMapper _mapper;
-
-        public DeleteEstateByCodeCommandHandler(IEstatesRepository estatesRepository, IMapper mapper)
+        private readonly IFeaturesRelationsRepository _featuresRelationsRepository;
+        public DeleteEstateByCodeCommandHandler(IEstatesRepository estatesRepository, IMapper mapper, IFeaturesRelationsRepository featuresRelationsRepository)
         {
             _estatesRepository = estatesRepository;
             _mapper = mapper;
+            _featuresRelationsRepository = featuresRelationsRepository;
         }
-        public async Task<string> Handle(DeleteEstateByCodeCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(DeleteEstateByCodeCommand request, CancellationToken cancellationToken)
         {
-            var estate = await _estatesRepository.GetByCodeAsync(request.Code);
+            var estate = await _estatesRepository.GetByIdAsync(request.Id);
 
             if (estate == null) throw new Exception("Estate not found");
 
             await _estatesRepository.DeleteAsync(estate);
 
-            return request.Code;
+            return request.Id;
         }
     }
 }

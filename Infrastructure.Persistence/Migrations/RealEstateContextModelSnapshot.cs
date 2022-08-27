@@ -323,7 +323,7 @@ namespace Infrastructure.Persistence.Migrations
                     b.HasOne("Core.Domain.Entities.Estate", "Estates")
                         .WithMany("FeaturesRelations")
                         .HasForeignKey("EstateId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Core.Domain.Entities.Feature", "Feature")

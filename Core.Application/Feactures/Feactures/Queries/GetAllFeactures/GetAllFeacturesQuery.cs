@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.Feactures.Queries.GetAllFeactures
 {
-    public class GetAllFeacturesQuery : IRequest<FeaturesRequest>
+    public class GetAllFeacturesQuery : IRequest<List<FeaturesRequest>>
     {
     }
-    public class GetAllFeacturesQueryHandler : IRequestHandler<GetAllFeacturesQuery, FeaturesRequest>
+    public class GetAllFeacturesQueryHandler : IRequestHandler<GetAllFeacturesQuery, List<FeaturesRequest>>
     {
         private readonly IFeaturesRepository _featuresRepository;
         private readonly IMapper _mapper;
@@ -23,9 +23,9 @@ namespace Core.Application.Feactures.Feactures.Queries.GetAllFeactures
             _featuresRepository = featuresRepository;
             _mapper = mapper;
         }
-        public Task<FeaturesRequest> Handle(GetAllFeacturesQuery request, CancellationToken cancellationToken)
+        public async Task<List<FeaturesRequest>> Handle(GetAllFeacturesQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<List<FeaturesRequest>>(await _featuresRepository.GetAllAsync());
         }
     }
 }

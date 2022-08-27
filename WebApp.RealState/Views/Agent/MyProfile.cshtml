@@ -1,0 +1,33 @@
+﻿@model Core.Application.ViewModels.User.UserSaveViewModel
+
+@section Styles{
+    <link href="~/css/User.css" rel="stylesheet" />
+}
+
+<iv class="loginContainer">
+    <div class="formLogin">
+        <header>
+            MyProfile
+        </header>
+    <form method="post" enctype="multipart/form-data" asp-controller="Agent" asp-action="MyProfile">
+        <div class="field">
+            <input asp-for="Name" placeholder="Ingrese su nombre" />
+        </div>
+        <div class="field">
+            <input asp-for="LastName" placeholder="Ingrese su apellido" />
+        </div>
+        <div class="field">
+            <input asp-for="Phone" placeholder="Ingrese su numero de telefono" />
+        </div>
+
+        <div class="field img" style=" height: 70px; margin-bottom: 10px;">
+            <label>Imagen de usuario </label>
+            <input asp-for="File" />
+        </div>
+        <div class="buttons">
+            <button>Update</button>
+            <a asp-controller="Account" asp-action="Index" class="btn btn-outline-warning">Atras</a>
+        </div>
+    </form>
+    </div>
+</div>
