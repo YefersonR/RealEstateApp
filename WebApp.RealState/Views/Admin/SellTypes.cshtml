@@ -1,15 +1,12 @@
-﻿
+﻿@model List<Core.Application.DTOS.Estates.SellTypeRequest>
 @{
-    ViewData["Title"] = "Mejoras";
+    ViewData["Title"] = "Ventas";
 }
 @*@{
     bool editMode = Model.Id == 0 ? false : true;
     
 }*@
-<h1>Mejoras</h1>
-
-
-
+<h1>Ventas</h1>
 
 <div class="Container">
 
@@ -18,7 +15,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Eliminar Mejora @*@Model.Name*@</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Eliminar tipo de Venta @*@Model.Name*@</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -26,7 +23,7 @@
                     <input type="hidden" asp-for="Id" />
                     
                 </form>*@
-         <label>Esta seguro que desea eliminar esta mejora</label>
+         <label>Esta seguro que desea eliminar este tipo de Venta</label>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -44,7 +41,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        @*<h5 class="modal-title" id="exampleModalLabel">@(editMode ? $"Editando la mejora: {Model.Name}": "Creando un nueva Mejora")</h5>*@
+        @*<h5 class="modal-title" id="exampleModalLabel">@(editMode ? $"Editando tipo de Venta: {Model.Name}": "Creando un nuevo tipo de Venta")</h5>*@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -53,7 +50,7 @@
 
         <form >
           <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">Nombre de la mejora:</label>
+            <label for="recipient-name" class="col-form-label">Nombre del tipo de Venta:</label>
             <input type="text" class="form-control" id="recipient-name">
           </div>
           <div class="mb-3">
@@ -70,13 +67,12 @@
   </div>
 </div>
    
-        @*@foreach(var data in Model){*@
-    <div class="col-4">
+    @foreach(var data in Model){
+        <div class="col-4">
                     <div class="card shadow-sm">
-                       @* <img class="bd-placeholder-img card-img-top img-Pokemon-size" src="@data.EstatesImgs.FirstOrDefault().ImgUrl"/>*@
                         <div class="card-body">
-                         <h4 >Pon la variable del nombre</h4>
-                            <p class="card-text">Descripcion:</p>
+                         <h4 >@data.Name</h4>
+                            <p class="card-text">@data.Description</p>
                             <div>
                              <div class="d-flex justify-content-between align-items-center">
 
@@ -85,7 +81,7 @@
                                       <a class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal1">Eliminar</a>
                                       <a class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">Editar</a>
                              </div>
-                                <small class="text-muted">Cantidad</small>
+                                <small class="text-muted">@data.Estates.Count()</small>
                               </div>
 
 
@@ -93,6 +89,6 @@
                         </div>
                     </div>
                  </div>
-                 @*}*@
+        }
 
  </div>

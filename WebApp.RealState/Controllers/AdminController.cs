@@ -1,4 +1,5 @@
-﻿using Core.Application.Feactures.Feactures.Commands.CreateFeacture;
+﻿using Core.Application.Feactures.EstateTypes.Queries.GetAllEstateTypes;
+using Core.Application.Feactures.Feactures.Commands.CreateFeacture;
 using Core.Application.Feactures.Feactures.Commands.DeleteFeactureById;
 using Core.Application.Feactures.Feactures.Commands.UpdateFeacture;
 using Core.Application.Feactures.Feactures.Queries.GetAllFeactures;
@@ -8,6 +9,7 @@ using Core.Application.Feactures.SellTypes.Commands.DeleteSellTypeById;
 using Core.Application.Feactures.SellTypes.Commands.UpdateSellType;
 using Core.Application.Feactures.SellTypes.Queries.GetAllSellTypes;
 using Core.Application.Feactures.SellTypes.Queries.GetSellTypeById;
+using Core.Application.ViewModels.AdminPanel;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,8 +29,9 @@ namespace WebApp.RealState.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> SellTypes(CreateSellTypeCommand command)
+        public async Task<IActionResult> SellTypes(SaveSellTypeViewModel vm)
         {
+            CreateSellTypeCommand command = new();
             return View(await Mediator.Send(command));
         }
 
@@ -83,41 +86,9 @@ namespace WebApp.RealState.Controllers
         
         }
 
-        public IActionResult Administradores()
+        public async Task<IActionResult> EstateType()
         {
-
-            return View();
-
+            return View(await Mediator.Send(new GetAllEstateTypesQuery()));
         }
-
-        public IActionResult Desarrolladores()
-        {
-
-            return View();
-
-        }
-
-        public IActionResult Mejoras()
-        {
-
-            return View();
-
-        }
-
-        public IActionResult Propiedades()
-        {
-
-            return View();
-
-        }
-
-        public IActionResult Ventas()
-        {
-
-            return View();
-
-        }
-
-
     }
 }

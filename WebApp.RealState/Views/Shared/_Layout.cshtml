@@ -64,12 +64,12 @@
                             }
                             @if (user.Roles.IndexOf("Administrador") >= 0)
                             {
-                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="Index">Administratos</a>
-                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="Index">Agents</a>
-                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="Index">SellTypes</a>
-                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="Index">EstatesTypes</a>
-                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="Index">Features</a>
-                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="Index">Estates</a>
+                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Admin" asp-action="Index">Administratos</a>
+                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Admin" asp-action="Agents">Agents</a>
+                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Admin" asp-action="SellTypes">SellTypes</a>
+                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Admin" asp-action="EstateType">EstatesTypes</a>
+                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Admin" asp-action="Features">Features</a>
+                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Admin" asp-action="Estates">Estates</a>
                             }
                             <a class="btn btn-outline-warning me-2" asp-area="" asp-controller="Account" asp-action="LogOut">LogOut</a>
                         }

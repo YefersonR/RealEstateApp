@@ -25,7 +25,8 @@ namespace Core.Application.Feactures.Feactures.Queries.GetAllFeactures
         }
         public async Task<List<FeaturesRequest>> Handle(GetAllFeacturesQuery request, CancellationToken cancellationToken)
         {
-            return _mapper.Map<List<FeaturesRequest>>(await _featuresRepository.GetAllAsync());
+            var data = await _featuresRepository.GetAllWhitIncludes(new List<string> { "FeaturesRelations" });
+            return _mapper.Map<List<FeaturesRequest>>(data);
         }
     }
 }
