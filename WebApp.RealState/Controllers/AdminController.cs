@@ -11,7 +11,6 @@ using Core.Application.Feactures.SellTypes.Commands.DeleteSellTypeById;
 using Core.Application.Feactures.SellTypes.Commands.UpdateSellType;
 using Core.Application.Feactures.SellTypes.Queries.GetAllSellTypes;
 using Core.Application.Feactures.SellTypes.Queries.GetSellTypeById;
-using Core.Application.ViewModels.AdminPanel;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +18,7 @@ using System.Threading.Tasks;
 
 namespace WebApp.RealState.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class AdminController : Controller
     {
         private IMediator _mediator;
@@ -98,5 +98,7 @@ namespace WebApp.RealState.Controllers
         {
             return View();
         }
+
+
     }
 }

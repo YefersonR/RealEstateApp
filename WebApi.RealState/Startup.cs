@@ -44,7 +44,7 @@ namespace WebApi.RealEstate
                 options.SuppressMapClientErrors = true;
 
             });
-            services.AddIdentityInfrastructure(Configuration);
+            services.AddIdentityjwtInfrastructure(Configuration);
             services.AddPersistenceInfraestructure(Configuration);
             services.AddSharedInfrastructure(Configuration);
             services.AddApplicationLayer(Configuration);

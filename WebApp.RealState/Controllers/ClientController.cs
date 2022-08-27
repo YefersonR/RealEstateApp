@@ -12,6 +12,7 @@ using WebApp.RealState.Middleware;
 
 namespace WebApp.RealState.Controllers
 {
+    [Authorize(Roles = "Cliente")]
     public class ClientController : Controller
     {
         private readonly ValidateUser _validateUser;
