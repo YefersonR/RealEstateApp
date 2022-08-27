@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.Favorites.Commands.CreateFavorite
 {
+    /// <summary>
+    /// Parametros para la agregar de una propiedad a favoritos
+    /// </summary>
     public class CreateFavoriteCommand: IRequest<int>
     {
         public string UserId { get; set; }

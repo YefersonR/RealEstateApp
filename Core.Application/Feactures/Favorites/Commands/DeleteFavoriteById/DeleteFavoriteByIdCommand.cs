@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.Favorites.Commands.DeleteFavoriteById
 {
+    /// <summary>
+    /// Parametros para la eliminacion de una propiedad de favoritos
+    /// </summary>
     public class DeleteFavoriteByIdCommand: IRequest<int>
     {
         public int Id { get; set; }

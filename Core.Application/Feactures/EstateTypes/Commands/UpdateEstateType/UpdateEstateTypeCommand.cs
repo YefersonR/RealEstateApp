@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.EstateTypes.Commands.UpdateEstateType
 {
+    /// <summary>
+    /// Parametros para la actualizacion de un tipo de propiedad
+    /// </summary>
     public class UpdateEstateTypeCommand : IRequest<UpdateEstateTypeCommandResponse>
     {
         public int Id

@@ -4,22 +4,32 @@ using Core.Application.Feactures.EstateTypes.Commands.DeleteEstateTypeById;
 using Core.Application.Feactures.EstateTypes.Commands.UpdateEstateType;
 using Core.Application.Feactures.EstateTypes.Queries.GetAllEstateTypes;
 using Core.Application.Feactures.EstateTypes.Queries.GetEstateTypeById;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading.Tasks;
 
 namespace WebApi.RealState.Controllers.V1
 {
     [ApiVersion("1.0")]
+    [SwaggerTag("Mantenimiento de tipo de propiedades")]
     public class EstateTypesController : BaseApiController
     {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Create(CreateEstateTypeCommand command)
+        [Consumes(MediaTypeNames.Application.Json)]
+        [SwaggerOperation(
+            Summary = "Crear tipo de propiedad",
+            Description = "Recibe los parametros para crear un tipo de propiedad"
+            )]
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> Create([FromBody] CreateEstateTypeCommand command)
         {
 
             try
@@ -36,10 +46,17 @@ namespace WebApi.RealState.Controllers.V1
 
             }
         }
+
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EstateTypeRequest))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Update(int Id, UpdateEstateTypeCommand command)
+        [Consumes(MediaTypeNames.Application.Json)]
+        [SwaggerOperation(
+            Summary = "Actualizar un tipo de propiedad",
+            Description = "Recibe los parametros para actualizar un tipo de propiedad"
+            )]
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> Update(int Id, [FromBody] UpdateEstateTypeCommand command)
         {
             try
             {
@@ -62,6 +79,11 @@ namespace WebApi.RealState.Controllers.V1
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EstateTypeRequest))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [SwaggerOperation(
+            Summary = "Listar tipos de propiedades",
+            Description = "Obtiene los datos de todas los tipos de propiedades"
+            )]
+        [Authorize(Roles = "Administrador,Desarrollador")]
         public async Task<IActionResult> List()
         {
             try
@@ -77,6 +99,11 @@ namespace WebApi.RealState.Controllers.V1
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(EstateTypeRequest))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [SwaggerOperation(
+            Summary = "Listar datos de un tipo de propiedad",
+            Description = "Recibe el id de un tipo de propiedad y muestra sus datos"
+            )]
+        [Authorize(Roles = "Administrador,Desarrollador")]
         public async Task<IActionResult> GetById(int Id)
         {
             try
@@ -92,6 +119,11 @@ namespace WebApi.RealState.Controllers.V1
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [SwaggerOperation(
+            Summary = "Eliminar mejora",
+            Description = "Recibe el id de un tipo de propiedad y lo elimina"
+            )]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Delete(int Id)
         {
             try

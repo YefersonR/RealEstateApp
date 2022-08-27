@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace WebApi.RealState.Extentions
 {
@@ -14,6 +15,7 @@ namespace WebApi.RealState.Extentions
             builder.UseSwaggerUI(option =>
             {
                 option.SwaggerEndpoint("/swagger/v1/swagger.json","RealState Api");
+                option.DefaultModelRendering(ModelRendering.Model);
             });
         }
     }

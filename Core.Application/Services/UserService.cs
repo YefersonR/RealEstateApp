@@ -80,5 +80,9 @@ namespace Core.Application.Services
             var agente = await _accountService.GetAgentById(Id);
             return _mapper.Map<AgentesViewModel>(agente);
         }
+        public async Task ChangeUserState(string id, string estado)
+        {
+            await _accountService.ChangeUserState(id, estado);
+        }
     }
 }

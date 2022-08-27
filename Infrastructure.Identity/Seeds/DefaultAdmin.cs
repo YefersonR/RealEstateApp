@@ -1,4 +1,5 @@
-﻿using Infrastructure.Identity.Entities;
+﻿using Core.Application.Enum;
+using Infrastructure.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,10 @@ namespace Infrastructure.Identity.Seeds
         {
             var user = new ApplicationUser 
             {
-                Name="",
-                LastName="",
-                UserName="",
-                Email="",
+                Name="Yeferson",
+                LastName="Rubio",
+                UserName="YRubio",
+                Email="YRubio@gmail.com",
                 PhoneNumber="",
                 EmailConfirmed=true
             };
@@ -27,6 +28,8 @@ namespace Infrastructure.Identity.Seeds
                 if(userEmail == null)
                 {
                     await userManager.CreateAsync(user,"123Pa$$word!");
+                    await userManager.AddToRoleAsync(user, Roles.Administrador.ToString());
+
                 }
             }
         }

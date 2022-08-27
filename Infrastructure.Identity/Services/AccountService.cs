@@ -121,7 +121,8 @@ namespace Infrastructure.Identity.Services
                     Body = $"Please confirm your account visiting this URL {verificationUrl}",
                     Subject = "Confirm registration"
                 });
-            } else if (request.UserType == Roles.Agente.ToString())
+            } 
+            else if (request.UserType == Roles.Agente.ToString())
             {
                 var result = await _userManager.CreateAsync(user, request.Password);
                 if (!result.Succeeded)
@@ -134,6 +135,36 @@ namespace Infrastructure.Identity.Services
                 var regiteredUser = await _userManager.FindByEmailAsync(user.Email);
                 response.Id = regiteredUser.Id;
                 await _userManager.AddToRoleAsync(user, Roles.Agente.ToString());
+            }
+            else if (request.UserType == Roles.Administrador.ToString())
+            {
+                user.EmailConfirmed = true;
+                var result = await _userManager.CreateAsync(user, request.Password);
+                if (!result.Succeeded)
+                {
+                    response.HasError = true;
+                    response.Error = "A error occurred trying to register the user.";
+                    return response;
+
+                }
+                var regiteredUser = await _userManager.FindByEmailAsync(user.Email);
+                response.Id = regiteredUser.Id;
+                await _userManager.AddToRoleAsync(user, Roles.Administrador.ToString());
+            }
+            else if (request.UserType == Roles.Desarrollador.ToString())
+            {
+                user.EmailConfirmed = true;
+                var result = await _userManager.CreateAsync(user, request.Password);
+                if (!result.Succeeded)
+                {
+                    response.HasError = true;
+                    response.Error = "A error occurred trying to register the user.";
+                    return response;
+
+                }
+                var regiteredUser = await _userManager.FindByEmailAsync(user.Email);
+                response.Id = regiteredUser.Id;
+                await _userManager.AddToRoleAsync(user, Roles.Desarrollador.ToString());
             }
 
             return response;
@@ -290,13 +321,22 @@ namespace Infrastructure.Identity.Services
             
             return agent;
         }
-        
-        //public async Task ChangeUserState(string id)
-        //{
-        //    var user = await _userManager.FindByIdAsync(id);
-        //    user.EmailConfirmed = user.EmailConfirmed == false ? true : false;
-        //    await _userManager.UpdateAsync(user);
-        //}
+
+        public async Task ChangeUserState(string id, string estado)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (estado == "activo" || estado == "true")
+            {
+                user.EmailConfirmed = true;
+                await _userManager.UpdateAsync(user);
+            }
+            else if(estado == "inactivo" || estado == "false")
+            {
+                user.EmailConfirmed = false;
+                await _userManager.UpdateAsync(user);
+            }
+
+        }
 
         //public async Task<List<string>> GetAdminUsers()
         //{

@@ -34,13 +34,24 @@ namespace WebApi.RealEstate
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers(options=>
+            {
+                options.Filters.Add(new ProducesAttribute("application/json"));
+
+            }).ConfigureApiBehaviorOptions(options =>
+            {
+                options.SuppressInferBindingSourcesForParameters = true;
+                options.SuppressMapClientErrors = true;
+
+            });
             services.AddIdentityInfrastructure(Configuration);
             services.AddPersistenceInfraestructure(Configuration);
             services.AddSharedInfrastructure(Configuration);
             services.AddApplicationLayer(Configuration);
+
             services.AddHealthChecks();
             services.AddSwaggerExtention();
+            services.AddApiVersioningExtensions();
 
             services.AddDistributedMemoryCache();
             services.AddSession();
@@ -68,6 +79,7 @@ namespace WebApi.RealEstate
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSwaggerExtention();
+
             app.UseHealthChecks("/health");
 
             app.UseSession();

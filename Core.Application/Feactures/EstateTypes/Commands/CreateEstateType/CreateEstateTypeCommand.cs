@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.EstateTypes.Commands.CreateEstateType
 {
+    /// <summary>
+    /// Parametros para la creacion de un tipo de propiedad
+    /// </summary>
     public class CreateEstateTypeCommand : IRequest<int>
     {
         public int Id { get; set; }

@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.Feactures.Commands.UpdateFeacture
 {
+    /// <summary>
+    /// Parametros para la actualizacion de una mejora
+    /// </summary>
     public class UpdateFeacturesCommand : IRequest<UpdateFeacturesCommandResponse>
     {
         public int Id

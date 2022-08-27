@@ -30,6 +30,8 @@ namespace WebApp.RealEstate
                     await DefaultClient.Seed(userManager, roleManager);
                     await DefaultAgent.Seed(userManager, roleManager);
                     await DefaultAdmin.Seed(userManager,roleManager);
+                    await DefaultDev.Seed(userManager, roleManager);
+
 
                 }
                 catch (Exception ex)

@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.SellTypes.Commands.DeleteSellTypeById
 {
+    /// <summary>
+    /// Parametros para la eliminacion de un tipo de venta
+    /// </summary>
     public class DeleteSellTypeByIdCommand : IRequest<int>
     {
         public int Id { get; set; }

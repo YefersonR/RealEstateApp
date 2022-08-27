@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.SellTypes.Commands.CreateSellType
 {
+    /// <summary>
+    /// Parametros para la Creacion de un tipo de venta
+    /// </summary>
     public class CreateSellTypeCommand : IRequest<int>
     {
         public int Id { get; set; }

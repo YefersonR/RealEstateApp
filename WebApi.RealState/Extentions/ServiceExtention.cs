@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace WebApi.RealState.Extentions
@@ -17,18 +18,19 @@ namespace WebApi.RealState.Extentions
                 List<string> xmlFiles = Directory.GetFiles(AppContext.BaseDirectory,"*.xml",SearchOption.TopDirectoryOnly).ToList();
                 xmlFiles.ForEach(xmlFiles => option.IncludeXmlComments(xmlFiles));
 
-                option.SwaggerDoc("V1", new OpenApiInfo
+                option.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
                     Title = "RealEstate Api",
                     Description = "",
                     Contact = new OpenApiContact
                     {
-                        Name = "",
-                        Email = "",
-                        Url = new Uri("")
+                        Name = "ApiRealState",
+                        Email = "ApiRealState@gmail.com",
+                        Url = new Uri("https://itla.edu.do/")
                     }
                 });
+                option.EnableAnnotations();
                 option.DescribeAllParametersInCamelCase();
                 option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
@@ -57,11 +59,11 @@ namespace WebApi.RealState.Extentions
                 });
             });
         }
-        public static void AddApi(this IServiceCollection services)
+        public static void AddApiVersioningExtensions(this IServiceCollection services)
         {
             services.AddApiVersioning(config =>
             {
-                config.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+                config.DefaultApiVersion = new ApiVersion(1, 0);
                 config.AssumeDefaultVersionWhenUnspecified = true;
                 config.ReportApiVersions = true;
             });

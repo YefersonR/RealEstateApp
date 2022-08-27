@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.EstateTypes.Commands.DeleteEstateTypeById
 {
+    /// <summary>
+    /// Parametros para la eliminacion de un tipo de propiedad
+    /// </summary>
     public class DeleteEstateTypeByIdCommand : IRequest<int>
     {
         public int Id { get; set; }

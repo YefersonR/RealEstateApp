@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.SellTypes.Commands.UpdateSellType
 {
+    /// <summary>
+    /// Parametros para la actualizacion de un tipo de venta
+    /// </summary>
     public class UpdateSellTypeCommand : IRequest<UpdateSellTypeCommandResponse>
     {
         public int Id
