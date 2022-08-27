@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Core.Application.DTOS.Account
@@ -20,6 +21,9 @@ namespace Core.Application.DTOS.Account
         public bool IsVerified { get; set; }
         public bool HasError { get; set; } = false;
         public string Error { get; set; } 
+        public string JWToken { get; set; }
+        [JsonIgnore]
+        public string RefreshToken { get; set; }
 
     }
 }

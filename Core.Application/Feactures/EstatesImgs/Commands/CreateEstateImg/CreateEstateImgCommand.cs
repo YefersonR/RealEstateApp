@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.EstatesImgs.Commands.CreateEstateImg
 {
+    /// <summary>
+    /// Parametro para la creacion de una imagen de la propiedad 
+    /// </summary>
     public class CreateEstateImgCommand : IRequest<int>
     {
         public string Code { get; set; }

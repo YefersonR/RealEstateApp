@@ -2,6 +2,7 @@
 using Core.Application.Interface.Repositories;
 using Core.Domain.Entities;
 using MediatR;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,10 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.Estates.Commands.DeleteEstateById
 {
-    public class DeleteEstateByCodeCommand : IRequest<int>
+    /// <summary>
+    /// Parametro para la eliminacion de una propiedad
+    /// </summary>
+    public class DeleteEstateByCodeCommand : IRequest<string>
     {
         public int Id { get; set; }
     }

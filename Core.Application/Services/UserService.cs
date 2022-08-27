@@ -80,5 +80,9 @@ namespace Core.Application.Services
             var agente = await _accountService.GetUserInfo(Id);
             return _mapper.Map<UserSaveViewModel>(agente);
         }
+        public async Task ChangeUserState(string id, string estado)
+        {
+            await _accountService.ChangeUserState(id, estado);
+        }
     }
 }

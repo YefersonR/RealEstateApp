@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.EstatesImgs.Commands.UpdateEstateImg
 {
+    /// <summary>
+    /// Parametro para la actualizacion de una imagen de la propiedad 
+    /// </summary>
     public class UpdateEstateImgCommand : IRequest<UpdateEstateImgCommandResponse>
     {
         public int Id { get; set; }

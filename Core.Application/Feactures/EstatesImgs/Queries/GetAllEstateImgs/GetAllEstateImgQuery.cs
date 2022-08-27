@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.EstatesImgs.Queries.GetAllEstateImgs
 {
+    /// <summary>
+    /// Parametro para la obtencion de una imagen de la propiedad 
+    /// </summary>
     public class GetAllEstateImgQuery : IRequest<List<EstateImgRequest>>
     {
         public string EsteteCode { get; set; }

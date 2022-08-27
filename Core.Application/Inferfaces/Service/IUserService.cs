@@ -18,6 +18,7 @@ namespace Core.Application.Inferfaces.Service
         Task<GenericResponse> ForgotPassword(ForgotPasswordViewModel request, string origin);
         Task<GenericResponse> ResetPassword(ResetPasswordViewModel request);
         Task<List<AgentesViewModel>> GetAllAgents(AgentSearchViewModel vm);
-        Task<UserSaveViewModel> GetUserInfo(string Id);
+        Task<AgentesViewModel> GetAgentById(string Id);
+        Task ChangeUserState(string id, string estado);
     }
 }

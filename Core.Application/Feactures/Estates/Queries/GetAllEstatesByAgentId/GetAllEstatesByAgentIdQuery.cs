@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.Estates.Queries.GetEstateByCode
 {
+    /// <summary>
+    /// Parametro para la obtener de una propiedad por el codigo
+    /// </summary>
     public class GetAllEstatesByAgentIdQuery : IRequest<List<EstateRequest>>
     {
         public string AgentId { get;  set; }

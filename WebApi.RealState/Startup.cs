@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 using Infrastructure.Email;
 using Infrastructure.Persistence;
 using Core.Application;
+using Microsoft.AspNetCore.Http;
+using WebApi.RealState.Extentions;
 
 namespace WebApi.RealEstate
 {
@@ -32,17 +34,29 @@ namespace WebApi.RealEstate
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers(options=>
+            {
+                options.Filters.Add(new ProducesAttribute("application/json"));
+
+            }).ConfigureApiBehaviorOptions(options =>
+            {
+                options.SuppressInferBindingSourcesForParameters = true;
+                options.SuppressMapClientErrors = true;
+
+            });
             services.AddIdentityInfrastructure(Configuration);
             services.AddPersistenceInfraestructure(Configuration);
             services.AddSharedInfrastructure(Configuration);
             services.AddApplicationLayer(Configuration);
 
+            services.AddHealthChecks();
+            services.AddSwaggerExtention();
+            services.AddApiVersioningExtensions();
+
+            services.AddDistributedMemoryCache();
             services.AddSession();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi.RealState", Version = "v1" });
-            });
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,16 +65,24 @@ namespace WebApi.RealEstate
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebApi.RealState v1"));
             }
-            app.UseSession();
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
+            }
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSwaggerExtention();
+
+            app.UseHealthChecks("/health");
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

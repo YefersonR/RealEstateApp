@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.EstatesImgs.Commands.DeleteEstateImgById
 {
+    /// <summary>
+    /// Parametro para la eliminacion de una imagen de la propiedad 
+    /// </summary>
     public class DeleteEstateImgByIdCommand : IRequest<int>
     {
         public int Id { get; set; }

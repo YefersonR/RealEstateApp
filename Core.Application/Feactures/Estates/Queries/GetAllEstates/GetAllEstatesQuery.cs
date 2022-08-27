@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.Estates.Queries.GetAllEstates
 {
+    /// <summary>
+    /// Parametro para la obtener de una propiedad por el codigo
+    /// </summary>
     public class GetAllEstatesQuery : IRequest<List<EstateRequest>>
     {
         public int? SellTypeId { get; set; }

@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.Feactures.Commands.CreateFeacture
 {
+    /// <summary>
+    /// Parametros para la Creacion de una mejora
+    /// </summary>
     public class CreateFeactureCommand : IRequest<int>
     {
         public int Id { get; set; }

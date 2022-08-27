@@ -30,6 +30,8 @@ namespace WebApi.RealEstate
                     await DefaultAdmin.Seed(userManager, roleManager);
                     await DefaultAgent.Seed(userManager, roleManager);
                     await DefaultClient.Seed(userManager, roleManager);
+                    await DefaultDev.Seed(userManager, roleManager);
+
 
                 }
                 catch (Exception ex)
@@ -37,6 +39,8 @@ namespace WebApi.RealEstate
 
                 }
             }
+            host.Run();
+
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

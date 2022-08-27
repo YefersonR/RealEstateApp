@@ -2,7 +2,6 @@
 using Core.Application.DTOS.Estates;
 using Core.Application.Inferfaces.Service;
 using Core.Application.Interface.Repositories;
-using Core.Application.ViewModels.User;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -11,17 +10,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Core.Application.Feactures.Estates.Queries.GetEstateByCode
+namespace Core.Application.Feactures.Estates.Queries.GetEstateById
 {
-    /// <summary>
-    /// Parametro para la obtener de una propiedad por el codigo
-    /// </summary>
-
-    public class GetEstateByCodeQuery : IRequest<EstateRequest>
+    public class GetEstateByIdQuery : IRequest<EstateRequest>
     {
-        public string Code { get;  set; }
+        public int Id { get; set; }
+
     }
-    public class GetEstateByIdQueryHandler : IRequestHandler<GetEstateByCodeQuery, EstateRequest>
+    public class GetEstateByIdQueryHandler : IRequestHandler<GetEstateByIdQuery, EstateRequest>
     {
         private readonly IEstatesRepository _estatesRepository;
         private readonly IFeaturesRepository _featuresRepository;
@@ -34,18 +30,18 @@ namespace Core.Application.Feactures.Estates.Queries.GetEstateByCode
             _userService = userService;
             _mapper = mapper;
         }
-        public async Task<EstateRequest> Handle(GetEstateByCodeQuery request, CancellationToken cancellationToken)
+        public async Task<EstateRequest> Handle(GetEstateByIdQuery request, CancellationToken cancellationToken)
         {
-            var estate = await GetWithIncludeByCode(request.Code);
+            var estate = await GetWithIncludeById(request.Id);
             return estate;
         }
-        public async Task<EstateRequest> GetWithIncludeByCode(string Code)
+        public async Task<EstateRequest> GetWithIncludeById(int Id)
         {
             var estateList = await _estatesRepository.GetAllWhitIncludes(new List<string> { "SellTypes", "EstateTypes", "EstatesImgs", "FeaturesRelations" });
-            var estate = estateList.Where(x => x.Code == Code).FirstOrDefault();
+            var estate = estateList.Where(x => x.Id == Id).FirstOrDefault();
             var estateRequest = _mapper.Map<EstateRequest>(estate);
             estateRequest.FeaturesRelations.ForEach(x => x.Features = _mapper.Map<FeaturesRequest>(_featuresRepository.GetByIdAsync(x.FeatureId).Result));
-            estateRequest.Agente = _mapper.Map<AgentesViewModel>(await _userService.GetUserInfo(estate.AgentId));
+            estateRequest.Agente = await _userService.GetAgentById(estate.AgentId);
             return estateRequest;
         }
     }

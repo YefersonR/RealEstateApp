@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.Feactures.Commands.DeleteFeactureById
 {
+    /// <summary>
+    /// Parametros para la eliminacion de una mejora
+    /// </summary>
     public class DeleteFeactureByIdCommand : IRequest<int>
     {
         public int Id { get; set; }
