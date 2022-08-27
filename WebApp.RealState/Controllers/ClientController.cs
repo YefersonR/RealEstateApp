@@ -4,6 +4,7 @@ using Core.Application.Feactures.Favorites.Commands.CreateFavorite;
 using Core.Application.Feactures.Favorites.Commands.DeleteFavoriteById;
 using Core.Application.Feactures.Favorites.Queries.GetFavoritesById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;

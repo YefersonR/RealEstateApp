@@ -11,6 +11,7 @@ using Core.Application.Feactures.SellTypes.Queries.GetAllSellTypes;
 using Core.Application.Feactures.SellTypes.Queries.GetSellTypeById;
 using Core.Application.ViewModels.AdminPanel;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
