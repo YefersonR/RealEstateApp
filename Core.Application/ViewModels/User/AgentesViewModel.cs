@@ -14,6 +14,6 @@ namespace Core.Application.ViewModels.User
         public string UserName { get; set; }
         public string Email { get; set; }
         public string ImageProfile { get; set; }
-
+        public bool IsVerified { get; set; }
     }
 }

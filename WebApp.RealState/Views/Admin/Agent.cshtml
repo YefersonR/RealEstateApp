@@ -1,0 +1,28 @@
+﻿@using Core.Application.ViewModels.User
+@model List<AgentesViewModel>
+
+
+<div class="Container">
+    <div class="m-4">
+        <form method="post" asp-controller="Admin" asp-action="Agent">
+            <div class="input-group">
+                <input type="text"  name="AgentName" class="form-control" placeholder="John Doe">
+                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+            </div>
+        </form>
+    </div>
+    <div class="row align-items-start m-4">
+        @foreach(var agents in Model){
+            <div class="col text-center">
+                <div class="card" style="width: 18rem;">
+                    <img src="@agents.ImageProfile" style="height: 200px" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">@agents.Name @agents.LastName</h5>
+                        <p class="card-text">@agents.Email</p>
+                        <a asp-controller="Admin" asp-action="AgentActive" asp-route-Id=@agents.Id asp-route-ActualEstate="@agents.IsVerified" class="btn btn-primary">Verfied: @agents.IsVerified</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

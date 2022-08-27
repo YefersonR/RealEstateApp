@@ -11,7 +11,9 @@ using Core.Application.Feactures.SellTypes.Commands.DeleteSellTypeById;
 using Core.Application.Feactures.SellTypes.Commands.UpdateSellType;
 using Core.Application.Feactures.SellTypes.Queries.GetAllSellTypes;
 using Core.Application.Feactures.SellTypes.Queries.GetSellTypeById;
+using Core.Application.Inferfaces.Service;
 using Core.Application.ViewModels.AdminPanel;
+using Core.Application.ViewModels.User;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +27,13 @@ namespace WebApp.RealState.Controllers
     {
         private IMediator _mediator;
         protected IMediator Mediator => _mediator ??= HttpContext.RequestServices.GetService<IMediator>();
+        private readonly IUserService _userService;
+
+        public AdminController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
 
         public async Task<IActionResult> SellTypes()
         {
@@ -100,6 +109,23 @@ namespace WebApp.RealState.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Agent(AgentSearchViewModel vm)
+        {
+            return View(await _userService.GetAllAgents(vm));
+        }
+
+        public async Task<IActionResult> AgentActive(string Id, bool ActualEstate)
+        {
+            if(ActualEstate == true)
+            {
+                await _userService.ChangeUserState(Id, "false");
+            }
+            if (ActualEstate == false)
+            {
+                await _userService.ChangeUserState(Id, "true");
+            }
+            return RedirectToRoute(new {Controller = "Admin", Action = "Agent" });
+        }
 
     }
 }

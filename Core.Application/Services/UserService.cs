@@ -66,13 +66,14 @@ namespace Core.Application.Services
                 LastName = agentes.LastName,
                 ImageProfile = agentes.ImageProfile,
                 Email = agentes.Email,
-                Id = agentes.Id
-
+                Id = agentes.Id,
+                IsVerified = agentes.IsVerified
             }).ToList();
             if (vm.AgentName != null)
             {
                 listAgents = listAgents.Where(agent => (agent.Name +" " + agent.LastName).ToLower().Contains((vm.AgentName).ToLower())).ToList();
             }
+
             return listAgents;
         }
         public async Task<UserSaveViewModel> GetUserInfo(string Id)
