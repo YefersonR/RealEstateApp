@@ -17,6 +17,8 @@ namespace Core.Application.DTOS.Estates
         public int Toilets { get; set; }
         public string Description { get; set; }
         public string AgentId { get; set; }
+        public int SellTypeId { get; set; }
+        public int EstateTypeId { get; set; }
         public int FavoriteId { get; set; }
         public SellTypeRequest SellTypes { get; set; }
         public List<EstateImgRequest> EstatesImgs { get; set; }

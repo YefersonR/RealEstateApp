@@ -1,0 +1,76 @@
+﻿@model Core.Application.DTOS.Estates.EstateRequest
+@section Styles{
+    <link href="~/css/User.css" rel="stylesheet" />
+}
+
+<iv class="loginContainer m-4">
+    <div class="formLogin">
+        <header>
+            Estates
+        </header>
+    <form method="post" enctype="multipart/form-data" asp-controller="Agent" asp-action="EditEstate">
+        <div class="field">
+            <input asp-for="Description" placeholder="Description" />
+        </div>
+        <div class="field">
+            <input asp-for="Price" type="number" step="any" placeholder="Price" />
+        </div>
+        <div class="field">
+            <input asp-for="Area" type="number" step="any" placeholder="Area" />
+        </div>
+        <div class="field">
+            <input asp-for="Rooms" type="number" placeholder="Rooms" />
+        </div>
+        <div class="field">
+            <input asp-for="Toilets" type="number" placeholder="Toilets" />
+        </div>
+        <div class="field">
+            <label>EstateType</label>
+            <select name="EstateTypesId" class="form-select" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+                @foreach(var EstateTypes in ViewBag.EstateTypes)
+                {
+                    <option value=@EstateTypes.Id>@EstateTypes.Name</option>
+                }
+            </select>
+        </div>
+        <div class="field">
+            <label>SellType</label>
+            <select name="SellTypeId" class="form-select" aria-label="Default select example">
+              <option selected>Open this select menu</option>
+                @foreach(var SellType in ViewBag.SellTypes)
+                {
+                    <option value=@SellType.Id>@SellType.Name</option>
+                }
+            </select>
+        </div>
+        <div class="field img" style=" height: 70px; margin-bottom: 10px;">
+            <label>Estate Image</label>
+            <input name="ImageEstate" type="file" multiple/>
+        </div>
+
+        <div class="field">
+            <label>Features</label>
+            <select class="form-select" name="Features" multiple size="3" aria-label="multiple select example">
+                @foreach(var Features in ViewBag.Features)
+                {
+                    <option value=@Features.Id>@Features.Name</option>
+                }
+            </select>
+        </div>
+            <!--<div>
+                <a id="getFeatureBTN" class="btn btn-primary">Add Feature</a>
+            </div>
+        </div>
+            <br />
+        <div class="field" id="feutureListHtml">
+            <a name="Features">a</a>
+        </div>-->
+        <br />
+        <div class="buttons">
+            <button>Create</button>
+        </div>
+        <input hidden asp-for="Code" />
+    </form>
+</div>
+<br /><br />

@@ -20,6 +20,9 @@ using Core.Application.Feactures.Feactures.Queries.GetAllFeactures;
 using Microsoft.AspNetCore.Http;
 using Core.Application.Feactures.EstatesImgs.Commands.CreateEstateImg;
 using Core.Application.Feactures.Feactures.Commands.CreateFeaturesEstates;
+using Core.Application.DTOS.Estates;
+using Core.Application.Feactures.Feactures.Commands.DeleteAllFeactureById;
+using Core.Application.Feactures.EstatesImgs.Commands.DeleteEstateImgById;
 
 namespace WebApp.RealState.Controllers
 {
@@ -92,16 +95,46 @@ namespace WebApp.RealState.Controllers
 
         public async Task<IActionResult> EditEstate(string Code)
         {
-            await Mediator.Send(new GetEstateByCodeQuery() { Code = Code }); //send to edit
-            return RedirectToRoute(new { Controller = "Agent", Action = "Estates" });
+            ViewBag.SellTypes = await Mediator.Send(new GetAllSellTypesQuery());
+            ViewBag.EstateTypes = await Mediator.Send(new GetAllEstateTypesQuery());
+            ViewBag.Features = await Mediator.Send(new GetAllFeacturesQuery());
+            var data = await Mediator.Send(new GetEstateByCodeQuery() { Code = Code }); //send to edit
+            return View(data);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditEstate(UpdateEstateCommand command)
+        public async Task<IActionResult> EditEstate(EstateRequest request, string EstateTypesId, List<string> Features, List<IFormFile> ImageEstate)
         {
-            //Arreglar lo de que code sea el ID en Estates
-            await Mediator.Send(command);
-            return RedirectToRoute(new { Controller = "Agent", Action = "Estates" });
+            ViewBag.SellTypes = await Mediator.Send(new GetAllSellTypesQuery());
+            ViewBag.EstateTypes = await Mediator.Send(new GetAllEstateTypesQuery());
+            ViewBag.Features = await Mediator.Send(new GetAllFeacturesQuery());
+            var data = await Mediator.Send(new UpdateEstateCommand() { AgentId = request.AgentId, Area = request.Area,
+                Code = request.Code, Description = request.Description, Price = request.Price,
+                SellTypeId = request.SellTypeId,
+                EstateTypeId = request.EstateTypeId,
+                Rooms = request.Rooms,
+                Toilets = request.Toilets,
+            });
+            await Mediator.Send(new DeleteAllFeactureByIdCommand() { Id = data.Id });
+            foreach (var item in Features)
+            {
+                CreateFeaturesEstatesCommand featureCommand = new();
+                featureCommand.Code = data.Code; ;
+                featureCommand.FeaturedId = Int32.Parse(item);
+                await Mediator.Send(featureCommand);
+            }
+            if(ImageEstate != null)
+            {
+                await Mediator.Send(new DeleteAllEstateImgByIdCommand() { Id = data.Id });
+            }
+            foreach (var item in ImageEstate)
+            {
+                CreateEstateImgCommand imgCommand = new();
+                imgCommand.ImgUrl = _upload.UploadFile(item, data.Code, "ImgsEstate");
+                imgCommand.Code = data.Code;
+                await Mediator.Send(imgCommand);
+            }
+            return View();
         }
 
         public async Task<IActionResult> DeleteEstate(int Id)

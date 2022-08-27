@@ -41,6 +41,15 @@ namespace Core.Application.Mapper
                 .ForMember(x => x.Modified, opt => opt.Ignore())
                 .ForMember(x => x.ModifiedBy, opt => opt.Ignore());
 
+            CreateMap<Estate, UpdateEstateCommand>()
+                .ReverseMap()
+                .ForMember(x => x.Created, opt => opt.Ignore())
+                .ForMember(x => x.CreatedBy, opt => opt.Ignore())
+                .ForMember(x => x.Modified, opt => opt.Ignore())
+                .ForMember(x => x.ModifiedBy, opt => opt.Ignore())
+                .ForMember(x => x.FeaturesIds, opt => opt.Ignore());
+
+
             CreateMap<FeaturesRelations, CreateFeaturesEstatesCommand>()
                 .ReverseMap()
                 .ForMember(x => x.Created, opt => opt.Ignore())
