@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace Core.Application.Feactures.SellTypes.Queries.GetAllSellTypes
 {
-    public class GetAllSellTypesQuery : IRequest<SellTypeRequest>
+    public class GetAllSellTypesQuery : IRequest<List<SellTypeRequest>>
     {
     }
-    public class GetAllSellTypesQueryHandler : IRequestHandler<GetAllSellTypesQuery, SellTypeRequest>
+    public class GetAllSellTypesQueryHandler : IRequestHandler<GetAllSellTypesQuery, List<SellTypeRequest>>
     {
         private readonly ISellTypesRepository _sellTypesRepository;
         private readonly IMapper _mapper;
@@ -23,9 +23,10 @@ namespace Core.Application.Feactures.SellTypes.Queries.GetAllSellTypes
             _sellTypesRepository = sellTypesRepository;
             _mapper = mapper;
         }
-        public Task<SellTypeRequest> Handle(GetAllSellTypesQuery request, CancellationToken cancellationToken)
+        public async Task<List<SellTypeRequest>> Handle(GetAllSellTypesQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var selltype = await _sellTypesRepository.GetAllAsync();
+            return _mapper.Map<List<SellTypeRequest>>(selltype); 
         }
     }
 

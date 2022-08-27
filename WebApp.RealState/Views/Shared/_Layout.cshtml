@@ -59,8 +59,8 @@
                             }
                             @if (user.Roles.IndexOf("Agente") >= 0)
                             {
-                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="Estates">Estates</a>
-                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="Index">My profile</a>
+                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="MyEstates">Estates</a>
+                                <a class="btn btn-outline-light me-2" asp-area="" asp-controller="Agent" asp-action="MyProfile">My profile</a>
                             }
                             @if (user.Roles.IndexOf("Administrador") >= 0)
                             {

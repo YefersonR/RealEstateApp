@@ -75,10 +75,10 @@ namespace Core.Application.Services
             }
             return listAgents;
         }
-        public async Task<AgentesViewModel> GetAgentById(string Id)
+        public async Task<UserSaveViewModel> GetUserInfo(string Id)
         {
-            var agente = await _accountService.GetAgentById(Id);
-            return _mapper.Map<AgentesViewModel>(agente);
+            var agente = await _accountService.GetUserInfo(Id);
+            return _mapper.Map<UserSaveViewModel>(agente);
         }
     }
 }

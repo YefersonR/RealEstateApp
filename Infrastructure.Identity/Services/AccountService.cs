@@ -131,6 +131,18 @@ namespace Infrastructure.Identity.Services
             var response = new RegisterResponse();
             var user = await _userManager.FindByIdAsync(userId);
             user.ImageProfile = request.ImageProfile;
+            if(request.Name != null)
+            {
+                user.Name = request.Name;
+            }
+            if (request.LastName != null)
+            {
+                user.LastName = request.LastName;
+            }
+            if (request.Phone != null)
+            {
+                user.PhoneNumber = request.Phone;
+            }
 
             var result = await _userManager.UpdateAsync(user);
             if (!result.Succeeded)
@@ -264,7 +276,7 @@ namespace Infrastructure.Identity.Services
             }).ToList();
             return allAgents;
         } 
-        public async Task<AuthenticationResponse> GetAgentById(string Id)
+        public async Task<AuthenticationResponse> GetUserInfo(string Id)
         {
             var user = await _userManager.FindByIdAsync(Id);
             var agent = new AuthenticationResponse();
@@ -274,10 +286,12 @@ namespace Infrastructure.Identity.Services
             agent.UserName = user.UserName;
             agent.ImageProfile = user.ImageProfile;
             agent.Email = user.Email;
+            agent.Phone = user.PhoneNumber;
             agent.IsVerified = user.EmailConfirmed;
             
             return agent;
         }
+
         //public async Task ChangeUserState(string id)
         //{
         //    var user = await _userManager.FindByIdAsync(id);
