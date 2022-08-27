@@ -12,6 +12,6 @@ namespace Core.Domain.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         
-        public ICollection<Estate> Estates { get; set; }
+        public ICollection<FeaturesRelations> FeaturesRelations { get; set; }
     }
 }

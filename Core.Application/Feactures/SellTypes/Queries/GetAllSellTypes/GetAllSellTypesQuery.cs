@@ -25,7 +25,7 @@ namespace Core.Application.Feactures.SellTypes.Queries.GetAllSellTypes
         }
         public async Task<List<SellTypeRequest>> Handle(GetAllSellTypesQuery request, CancellationToken cancellationToken)
         {
-            var selltype = await _sellTypesRepository.GetAllAsync();
+            var selltype = await _sellTypesRepository.GetAllWhitIncludes(new List<string> { "Estates" });
             return _mapper.Map<List<SellTypeRequest>>(selltype); 
         }
     }

@@ -4,14 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Application.DTOS.Estates
+namespace Core.Application.ViewModels.AdminPanel
 {
-    public class FeaturesRequest
+    public class SaveSellTypeViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-
-        public List<FeaturesRelationsRequest> FeaturesRelations { get; set; }
     }
 }
