@@ -44,6 +44,10 @@ namespace WebApp.RealEstate.Controllers
             if(user != null && !user.HasError)
             {
                 HttpContext.Session.Set<AuthenticationResponse>("user",user);
+                if (user.Roles.Contains("Administrador"))
+                {
+                    return RedirectToRoute(new { controller = "Admin", action = "Index" });
+                }
                 return RedirectToRoute(new { controller = "General", action = "Index" });
             }
             login.HasError = user.HasError;

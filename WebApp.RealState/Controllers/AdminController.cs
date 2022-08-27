@@ -1,4 +1,5 @@
-﻿using Core.Application.Feactures.Estates.Commands.CreateEstates;
+﻿using Core.Application.Feactures.EstateTypes.Queries.GetAllEstateTypes;
+using Core.Application.Feactures.Estates.Commands.CreateEstates;
 using Core.Application.Feactures.EstateTypes.Commands.CreateEstateType;
 using Core.Application.Feactures.EstateTypes.Queries.GetAllEstateTypes;
 using Core.Application.Feactures.Feactures.Commands.CreateFeacture;
@@ -13,6 +14,7 @@ using Core.Application.Feactures.SellTypes.Queries.GetAllSellTypes;
 using Core.Application.Feactures.SellTypes.Queries.GetSellTypeById;
 using Core.Application.ViewModels.AdminPanel;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
@@ -88,8 +90,9 @@ namespace WebApp.RealState.Controllers
         
         }
 
-        public IActionResult Administradores()
+        public async Task<IActionResult> EstateType()
         {
+            return View(await Mediator.Send(new GetAllEstateTypesQuery()));
 
             return View();
 
