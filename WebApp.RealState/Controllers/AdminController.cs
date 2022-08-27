@@ -9,6 +9,7 @@ using Core.Application.Feactures.SellTypes.Commands.UpdateSellType;
 using Core.Application.Feactures.SellTypes.Queries.GetAllSellTypes;
 using Core.Application.Feactures.SellTypes.Queries.GetSellTypeById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;

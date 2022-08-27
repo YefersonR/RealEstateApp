@@ -23,6 +23,8 @@ using Core.Application.Feactures.Feactures.Commands.CreateFeaturesEstates;
 using Core.Application.DTOS.Estates;
 using Core.Application.Feactures.Feactures.Commands.DeleteAllFeactureById;
 using Core.Application.Feactures.EstatesImgs.Commands.DeleteEstateImgById;
+using Core.Application.Enum;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApp.RealState.Controllers
 {
@@ -50,12 +52,10 @@ namespace WebApp.RealState.Controllers
             ViewBag.IsLoggin = _validateUser.HasUser();
             return View(await Mediator.Send(new GetAllEstatesQuery() { AgentID = Id}));
         }
-
         public async Task<IActionResult> MyEstates()
         {
             return View(await Mediator.Send(new GetAllEstatesQuery() { AgentID = _validateUser.GetUserID() }));
         }
-        
 
         public async Task<IActionResult> Estates()
         {
@@ -64,7 +64,6 @@ namespace WebApp.RealState.Controllers
             ViewBag.Features = await Mediator.Send(new GetAllFeacturesQuery());
             return View(await Mediator.Send(new GetAllEstatesByAgentIdQuery() { AgentId = _validateUser.GetUserID() }));
         }
-
         [HttpPost]
         public async Task<IActionResult> Estates(CreateEstateCommand command, List<string> Features, List<IFormFile> ImageEstate)
         {
@@ -92,7 +91,6 @@ namespace WebApp.RealState.Controllers
 
             return View();
         }
-
         public async Task<IActionResult> EditEstate(string Code)
         {
             ViewBag.SellTypes = await Mediator.Send(new GetAllSellTypesQuery());
@@ -101,7 +99,6 @@ namespace WebApp.RealState.Controllers
             var data = await Mediator.Send(new GetEstateByCodeQuery() { Code = Code }); //send to edit
             return View(data);
         }
-
         [HttpPost]
         public async Task<IActionResult> EditEstate(EstateRequest request, string EstateTypesId, List<string> Features, List<IFormFile> ImageEstate)
         {
