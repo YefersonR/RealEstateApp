@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Application.ViewModels.AdminPanel
 {
-    public class SaveEstateTypeViewModel
+    public class SaveFeaturesViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
