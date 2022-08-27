@@ -95,7 +95,6 @@ namespace WebApp.RealState.Controllers
         {
             return View(await Mediator.Send(new GetAllEstateTypesQuery()));
         }
-
         public async Task<IActionResult> Index()
         {
             return View();
