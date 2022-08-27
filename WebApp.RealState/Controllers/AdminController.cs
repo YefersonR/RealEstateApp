@@ -1,4 +1,5 @@
-﻿using Core.Application.Feactures.Feactures.Commands.CreateFeacture;
+﻿using Core.Application.Feactures.EstateTypes.Queries.GetAllEstateTypes;
+using Core.Application.Feactures.Feactures.Commands.CreateFeacture;
 using Core.Application.Feactures.Feactures.Commands.DeleteFeactureById;
 using Core.Application.Feactures.Feactures.Commands.UpdateFeacture;
 using Core.Application.Feactures.Feactures.Queries.GetAllFeactures;
@@ -84,18 +85,9 @@ namespace WebApp.RealState.Controllers
         
         }
 
-        public IActionResult Administradores()
+        public async Task<IActionResult> EstateType()
         {
-
-            return View();
-
-        }
-
-        public IActionResult Desarrolladores()
-        {
-
-            return View();
-
+            return View(await Mediator.Send(new GetAllEstateTypesQuery()));
         }
     }
 }
