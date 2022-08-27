@@ -52,10 +52,12 @@ namespace WebApp.RealState.Controllers
             ViewBag.IsLoggin = _validateUser.HasUser();
             return View(await Mediator.Send(new GetAllEstatesQuery() { AgentID = Id}));
         }
+        [Authorize(Roles = "Agente")]
         public async Task<IActionResult> MyEstates()
         {
             return View(await Mediator.Send(new GetAllEstatesQuery() { AgentID = _validateUser.GetUserID() }));
         }
+        
 
         public async Task<IActionResult> Estates()
         {
@@ -64,6 +66,7 @@ namespace WebApp.RealState.Controllers
             ViewBag.Features = await Mediator.Send(new GetAllFeacturesQuery());
             return View(await Mediator.Send(new GetAllEstatesByAgentIdQuery() { AgentId = _validateUser.GetUserID() }));
         }
+        [Authorize(Roles = "Agente")]
         [HttpPost]
         public async Task<IActionResult> Estates(CreateEstateCommand command, List<string> Features, List<IFormFile> ImageEstate)
         {
@@ -91,6 +94,7 @@ namespace WebApp.RealState.Controllers
 
             return View();
         }
+        [Authorize(Roles = "Agente")]
         public async Task<IActionResult> EditEstate(string Code)
         {
             ViewBag.SellTypes = await Mediator.Send(new GetAllSellTypesQuery());
@@ -99,6 +103,8 @@ namespace WebApp.RealState.Controllers
             var data = await Mediator.Send(new GetEstateByCodeQuery() { Code = Code }); //send to edit
             return View(data);
         }
+        [Authorize(Roles = "Agente")]
+
         [HttpPost]
         public async Task<IActionResult> EditEstate(EstateRequest request, string EstateTypesId, List<string> Features, List<IFormFile> ImageEstate)
         {
@@ -134,18 +140,21 @@ namespace WebApp.RealState.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Agente")]
         public async Task<IActionResult> DeleteEstate(int Id)
         {
             await Mediator.Send(new DeleteEstateByCodeCommand() { Id = Id });
             return RedirectToRoute(new { Controller = "Agent", Action = "Estates" });
         }
 
+        [Authorize(Roles = "Agente")]
         public async Task<IActionResult> MyProfile()
         {
             UserSaveViewModel vm = await _userService.GetUserInfo(_validateUser.GetUserID());
             return View(vm);
         }
 
+        [Authorize(Roles = "Agente")]
         [HttpPost]
         public async Task<IActionResult> MyProfile(UserSaveViewModel vm)
         {
