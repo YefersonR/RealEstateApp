@@ -14,11 +14,11 @@ namespace Infrastructure.Identity.Seeds
         {
             var user = new ApplicationUser 
             {
-                Name="",
-                LastName="",
-                UserName="",
-                Email="",
-                PhoneNumber="",
+                Name="Jefferson",
+                LastName="Abreu",
+                UserName="Admin",
+                Email="admin@admin.com",
+                PhoneNumber="8258588748",
                 EmailConfirmed=true
             };
             if(userManager.Users.All(u=>u.Id != user.Id))
