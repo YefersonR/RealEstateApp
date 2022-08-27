@@ -48,20 +48,20 @@
 
           @*Agregale esto al form (method="post" asp-controller="Admin" asp-action="@(editMode ? "Edit":"Create")*@
 
-        <form >
+        <form method="post" asp-controller="Admin" asp-action="SellTypes">
           <div class="mb-3">
             <label for="recipient-name" class="col-form-label">Nombre del tipo de Venta:</label>
-            <input type="text" class="form-control" id="recipient-name">
+            <input type="text" name="Name" class="form-control" id="recipient-name">
           </div>
           <div class="mb-3">
             <label for="descripcion-text" class="col-form-label">Descripcion:</label>
-            <textarea type="text" class="form-control" id="descripcion-text"></textarea>
+            <textarea type="text" name="Description" class="form-control" id="descripcion-text"></textarea>
           </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-primary">Agregar</button>
+            </div>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Agregar</button>
       </div>
     </div>
   </div>

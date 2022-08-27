@@ -1,4 +1,8 @@
-﻿using Core.Application.Feactures.Feactures.Commands.CreateFeacture;
+﻿using Core.Application.Feactures.EstateTypes.Queries.GetAllEstateTypes;
+using Core.Application.Feactures.Estates.Commands.CreateEstates;
+using Core.Application.Feactures.EstateTypes.Commands.CreateEstateType;
+using Core.Application.Feactures.EstateTypes.Queries.GetAllEstateTypes;
+using Core.Application.Feactures.Feactures.Commands.CreateFeacture;
 using Core.Application.Feactures.Feactures.Commands.DeleteFeactureById;
 using Core.Application.Feactures.Feactures.Commands.UpdateFeacture;
 using Core.Application.Feactures.Feactures.Queries.GetAllFeactures;
@@ -28,9 +32,10 @@ namespace WebApp.RealState.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> SellTypes(CreateSellTypeCommand command)
+        public async Task<IActionResult> SellTypes(SaveSellTypeViewModel vm)
         {
-            return View(await Mediator.Send(command));
+            await Mediator.Send(new CreateSellTypeCommand() { Description = vm.Description, Name = vm.Name });
+            return View();
         }
 
         public async Task<IActionResult> EditSellType(int Id)
@@ -56,9 +61,10 @@ namespace WebApp.RealState.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Features(CreateFeactureCommand command)
+        public async Task<IActionResult> Features(SaveFeaturesViewModel vm)
         {
-            return View(await Mediator.Send(command));
+            await Mediator.Send(new CreateFeactureCommand() { Description = vm.Description, Name = vm.Name });
+            return View(await Mediator.Send(new GetAllFeacturesQuery()));
         }
 
         public async Task<IActionResult> EditFeatures(int Id)
@@ -114,9 +120,22 @@ namespace WebApp.RealState.Controllers
 
         public IActionResult Ventas()
         {
+            return View(await Mediator.Send(new GetAllEstateTypesQuery()));
 
             return View();
 
+        }
+
+        public IActionResult Desarrolladores()
+        {
+            return View(await Mediator.Send(new GetAllEstateTypesQuery()));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EstateType(SaveEstateTypeViewModel vm)
+        {
+            await Mediator.Send(new CreateEstateTypeCommand() { Description = vm.Description, Name = vm.Name });
+            return View(await Mediator.Send(new GetAllEstateTypesQuery()));
         }
 
 
