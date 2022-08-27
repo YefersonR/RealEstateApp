@@ -61,7 +61,7 @@ namespace WebApi.RealState.Controllers.V1
         {
             try
             {
-                var result = _userService.GetAgentById(Id);
+                var result = _userService.GetUserInfo(Id);
                 if (result == null)
                 {
                     return NotFound();

@@ -35,7 +35,7 @@ namespace Core.Application.Feactures.Estates.Commands.UpdateEstates
         [SwaggerParameter(Description = "Id del tipo de propiedad")]
         public int EstateTypesId { get; set; }
         [SwaggerParameter(Description = "Id del agente dueño de la propiedad")]
-        public int AgentId { get; set; }
+        public string AgentId { get; set; }
         [SwaggerParameter(Description = "Id del tipo de venta que tiene la propiedad")]
         public int SellTypeId { get; set; }
         public int EstateTypeId { get; set; }

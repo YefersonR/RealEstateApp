@@ -15,7 +15,7 @@ namespace Core.Application.Feactures.Estates.Commands.DeleteEstateById
     /// <summary>
     /// Parametro para la eliminacion de una propiedad
     /// </summary>
-    public class DeleteEstateByCodeCommand : IRequest<string>
+    public class DeleteEstateByCodeCommand : IRequest<int>
     {
         public int Id { get; set; }
     }
