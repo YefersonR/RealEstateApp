@@ -24,6 +24,6 @@ namespace Core.Application.DTOS.Estates
         public List<EstateImgRequest> EstatesImgs { get; set; }
         public List<FeaturesRelationsRequest> FeaturesRelations { get; set; }
         public EstateTypeRequest EstateTypes { get; set; }
-        public AgentesViewModel Agente { get; set; }
+        public UserSaveViewModel Agente { get; set; }
     }
 }

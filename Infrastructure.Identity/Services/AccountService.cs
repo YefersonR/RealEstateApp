@@ -351,32 +351,6 @@ namespace Infrastructure.Identity.Services
 
         }
 
-        //public async Task<List<string>> GetAdminUsers()
-        //{
-        //    var roleList = _userManager.GetUsersInRoleAsync("Admin").Result.ToList();
-        //    return roleList.Select(x => x.Id).ToList();
-        //}
-
-        //public async Task<string> GetSavingByID(string id)
-        //{
-        //    var savigs = await _userManager.FindByIdAsync(id);
-        //    return savigs.SavingAccount;
-        //}
-
-        //public async Task<UserSaveViewModel> GetAccountByid(string ID)
-        //{
-        //    var data = await _userManager.FindByIdAsync(ID);
-        //    return new UserSaveViewModel
-        //    {
-        //        Name = data.Name,
-        //        LastName = data.LastName,
-        //        UserName = data.UserName,
-        //        Identification = data.Identification,
-        //        Email = data.Email,
-        //        Id = data.Id,
-        //        SavingsAccount = data.SavingAccount
-        //    };
-        //}
         private async Task<JwtSecurityToken> GenerateJWToken(ApplicationUser user)
         {
             var userClaims = await _userManager.GetClaimsAsync(user);

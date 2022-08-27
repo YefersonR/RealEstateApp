@@ -13,8 +13,8 @@ namespace Core.Application.Inferfaces.Service
         Task<GenericResponse> UpdateUser(string userId, RegisterRequest request);
         Task<GenericResponse> ResetPassword(ResetPasswordRequest request);
         List<AuthenticationResponse> GetAllAgents();
+        Task<AuthenticationResponse> GetUserInfo(string Id);
         Task ChangeUserState(string id, string estado);
-        Task<AuthenticationResponse> GetAgentById(string Id);
         Task SignOut();
     }
 }

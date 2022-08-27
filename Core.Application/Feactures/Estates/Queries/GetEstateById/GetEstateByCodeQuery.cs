@@ -41,7 +41,7 @@ namespace Core.Application.Feactures.Estates.Queries.GetEstateById
             var estate = estateList.Where(x => x.Id == Id).FirstOrDefault();
             var estateRequest = _mapper.Map<EstateRequest>(estate);
             estateRequest.FeaturesRelations.ForEach(x => x.Features = _mapper.Map<FeaturesRequest>(_featuresRepository.GetByIdAsync(x.FeatureId).Result));
-            estateRequest.Agente = await _userService.GetAgentById(estate.AgentId);
+            estateRequest.Agente = await _userService.GetUserInfo(estate.AgentId);
             return estateRequest;
         }
     }

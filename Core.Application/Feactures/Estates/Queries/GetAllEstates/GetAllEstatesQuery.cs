@@ -101,7 +101,7 @@ namespace Core.Application.Feactures.Estates.Queries.GetAllEstates
                 int i = 0;
                 foreach(var data in estateResponse)
                 {
-                    estateResponse[i].Agente = _mapper.Map<AgentesViewModel>(await _userService.GetUserInfo(parameters.AgentID));
+                    estateResponse[i].Agente = _mapper.Map<UserSaveViewModel>(await _userService.GetUserInfo(parameters.AgentID));
                     i++;
                 }
             }
