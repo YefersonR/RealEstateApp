@@ -56,6 +56,7 @@ namespace Infrastructure.Identity.Services
                 response.Error = $"Account not confirm for {request.UserName}";
                 return response;
             }
+ 
             JwtSecurityToken jwtSecurityToken = await GenerateJWToken(User);
 
             response.Id = User.Id;

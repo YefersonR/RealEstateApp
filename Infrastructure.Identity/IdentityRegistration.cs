@@ -49,6 +49,7 @@ namespace Infrastructure.Identity
             });
             
             services.AddAuthentication();
+            services.Configure<JWTSettings>(configuration.GetSection("JWTSettings"));
 
             #endregion
             #region Services
