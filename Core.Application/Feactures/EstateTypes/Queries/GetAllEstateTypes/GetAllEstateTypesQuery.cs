@@ -25,7 +25,7 @@ namespace Core.Application.Feactures.EstateTypes.Queries.GetAllEstateTypes
         }
         public async Task<List<EstateTypeRequest>> Handle(GetAllEstateTypesQuery request, CancellationToken cancellationToken)
         {
-            var response = await _estateTypesRepository.GetAllAsync();
+            var response = await _estateTypesRepository.GetAllWhitIncludes(new List<string> { "Estates" });
             return _mapper.Map<List<EstateTypeRequest>>(response);
         }
     }
